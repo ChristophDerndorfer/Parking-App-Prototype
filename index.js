@@ -6,7 +6,7 @@ Ext.setup({
 	onReady: function() {
 
 		// The following is accomplished with the Google Map API
-		var position = new google.maps.LatLng(48.1999500,16.3680658592);
+		var position = new google.maps.LatLng(48.2000950,16.3684658592);
 		var follow_location = true;
 
 		infowindow = new google.maps.InfoWindow({
@@ -30,16 +30,16 @@ Ext.setup({
 		  
 		parkgarage = new google.maps.MarkerImage(
 			'parkgarage.png',
-			new google.maps.Size(64, 52),
+			new google.maps.Size(20, 20),
 			new google.maps.Point(0,0),
-			new google.maps.Point(-5, 42)
+			new google.maps.Point(10, 10)
 		  );
 		  
 		arrow = new google.maps.MarkerImage(
 			'arrow.png',
-			new google.maps.Size(64, 52),
+			new google.maps.Size(50, 50),
 			new google.maps.Point(0,0),
-			new google.maps.Point(-5, 42)
+			new google.maps.Point(25, 25)
 		  );
 
 		trackingButton = Ext.create({
@@ -60,7 +60,7 @@ Ext.setup({
 						xtype: 'searchfield',
 						placeHolder: 'Search',
 						name: 'searchfield',
-						width: 140
+						width: 120
 					}, {
 						icon: 'locationbutton.png',
 						title: 'Go to my location',
@@ -127,7 +127,7 @@ Ext.setup({
 			title: 'Map',
 			mapOptions : {
 				useCurrentLocation: false,
-				center : new google.maps.LatLng(48.1999500,16.3680658592),
+				center : position,
 				zoom : 17,
 				mapTypeId : google.maps.MapTypeId.ROADMAP,
 				mapTypeControl: false,
@@ -221,6 +221,13 @@ Ext.setup({
 			fillColor: "#FF0000",
 			fillOpacity: 0.25,
 			map: google_map.map
+		});
+		
+		var parkgarageMarker = new google.maps.Marker({ 
+			position: new google.maps.LatLng(48.1984500,16.3680958592),
+			title: 'Parkgarage 1',
+			map: google_map.map,
+			icon: parkgarage
 		});
 	}
 });
