@@ -26,6 +26,24 @@ Ext.setup({
 		iwFreeparking = new google.maps.InfoWindow({
 			content: '<p><b>Kurzparkzonen</b><img src="hq_images/arrow_hq.png" width="20" align="right"/></p>'
 		});
+		
+		Ext.regModel('Layers', {
+			fields: ['Layer']});
+		
+		layerStore = new Ext.data.Store({
+		
+			model: 'Layers',
+			sorters: 'Layer',
+			getGroupString : function(record) {
+				return record.get('Layer') [0];
+			},
+			data: [
+			       {Layer: 'Parkgaragen'},
+			       {Layer: 'Ticketautomaten'},
+			       {Layer: '...'}		   
+			]
+			
+		});
 
 		//Tracking Marker Image
 		point = new google.maps.MarkerImage(
@@ -236,12 +254,58 @@ Ext.setup({
 								items: 
 								[
 								 	{
-								 		text: 'Layer Settings',
-								 		handler: Ext.emptyFn
+								 		text: 'Layer Settings:',
+								 		scope: this,
+										handler: function() {	
+								 		    this.actions.hide();
+											popup = new Ext.Panel({
+												floating: true,
+												modal: true,
+												centered: true,
+												width: 300,
+												height: 350,
+												styleHtmlContent: true,
+												scroll: 'vertical',
+												items : [{
+													xtype: 'list',
+													store: layerStore,
+													cls: 'android',
+													multiSelect : true,
+													itemTpl: '<div class="Layers"><strong>{Layer}</strong></div>'
+												}],
+												dockedItems: [{
+													dock: 'top',
+													xtype: 'toolbar',
+													title: 'Layers'
+												}]
+											});
+										
+										popup.show('pop');
+									}
 								 	},
 								 	{
 								 		text: 'About Us',
-								 		handler: Ext.emptyFn
+								 		scope: this,
+										handler: function() {
+								 			this.actions.hide();
+											popup = new Ext.Panel({
+												floating: true,
+												modal: true,
+												centered: true,
+												width: 300,
+												height: 350,
+												styleHtmlContent: true,
+												scroll: 'vertical',
+												html: '<p><b>cnm_studios</b><br /><b></b><b>Developer:</b><br />Christoph<br />Michael<br />Nem<br /><br /></p>',
+												dockedItems: [{
+													dock: 'top',
+													xtype: 'toolbar',
+													title: 'About Us:'
+												}]
+											});
+										
+										popup.show('pop');
+									}
 								 	},
 								 	{
 								 		text: 'Cancel',
