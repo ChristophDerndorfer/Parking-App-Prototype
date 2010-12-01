@@ -236,5 +236,11 @@ Ext.setup({
 		google.maps.event.addListener(parkgarageMarker, 'click', function(){
 			infowindow.open(google_map.map, parkgarageMarker);
 		});
+		
+		google.maps.event.addListener(kurzparkzone, 'click', function(event){
+			
+			iwKurzparkzone.setPosition(event.latLng);
+			iwKurzparkzone.open(google_map.map);
+		});
 	}
 });
