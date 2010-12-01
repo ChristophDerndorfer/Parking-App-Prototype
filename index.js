@@ -6,8 +6,9 @@ Ext.setup({
 	onReady: function() {
 
 		// The following is accomplished with the Google Map API
-		var position = new google.maps.LatLng(48.2000950,16.3684658592);
+		var position = new google.maps.LatLng(48.18927,16.365391);
 		var follow_location = true;
+		var popup;
 
 		infowindow = new google.maps.InfoWindow({
 			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
@@ -77,6 +78,8 @@ Ext.setup({
 							//trackingButton.ownerCt.setActive(trackingButton, false);
 							if (geo.latitude != null && geo.latitude != 0)
 								google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
+								google_map.map.setZoom(19);
+								popup.hide();
 						}
 					}, {
 						icon: 'parkbutton.png',
@@ -84,8 +87,8 @@ Ext.setup({
 						width: 50,
 						padding: 5,
 						handler: function() {
-							if (!this.popup) {
-								this.popup = new Ext.Panel({
+							if (!popup) {
+								popup = new Ext.Panel({
 									floating: true,
 									modal: true,
 									centered: false,
@@ -104,7 +107,17 @@ Ext.setup({
 								                    icon: 'freeparking_popup.png',
 								                    margin: '10',
 								                    handler: function() {
-								                		
+														popup.hide();
+														google_map.map.panTo(new google.maps.LatLng(48.184458, 16.374768));
+														google_map.map.setZoom(16);
+														var parkingspacemarker = new google.maps.Marker({ 
+															position: new google.maps.LatLng(48.184458, 16.374768),
+															title: 'Parkplatz 1',
+															map: google_map.map,
+															icon: point,
+															shadow: shadow,
+															clickable: true
+														});
 								                	}
 								                }),
 								                new Ext.Button({
@@ -113,12 +126,20 @@ Ext.setup({
 								                    icon: 'garage_popup.png',
 								                    margin: '10',
 								                    handler: function() {
-								                		
+														popup.hide();
+														google_map.map.panTo(new google.maps.LatLng(48.1984500,16.3680958592));
+														google_map.map.setZoom(15);
+														var parkinggaragemarker = new google.maps.Marker({ 
+															position: new google.maps.LatLng(48.1984500,16.3680958592),
+															map: google_map.map,
+															icon: point,
+															shadow: shadow
+														});
 								                	}
 								                })]
 								});
 							}
-							this.popup.show('pop');
+							popup.show('pop');
 						}
 					}, {
 						icon: 'infobutton.png',
