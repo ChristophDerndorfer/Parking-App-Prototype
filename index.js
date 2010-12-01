@@ -1,5 +1,3 @@
-var google_map;
-
 Ext.setup({
 	tabletStartupScreen: 'tablet_startup.png',
 	phoneStartupScreen: 'phone_startup.png',
@@ -9,6 +7,7 @@ Ext.setup({
 
 		// The following is accomplished with the Google Map API
 		var position = new google.maps.LatLng(48.1999500,16.3680658592);
+		var follow_location = true;
 
 		infowindow = new google.maps.InfoWindow({
 			content: 'Sencha Touch HQ'
@@ -131,6 +130,7 @@ Ext.setup({
 				center : new google.maps.LatLng(48.1999500,16.3680658592),
 				zoom : 17,
 				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				mapTypeControl: false,
 				navigationControl: true,
 				navigationControlOptions: {
 						style: google.maps.NavigationControlStyle.SMALL,
@@ -148,6 +148,12 @@ Ext.setup({
 				autoUpdate: true,
 				listeners: {
 					locationupdate: function (geo) {
+						// reposition the arrow image
+						position = new google.maps.LatLng(geo.latitude, geo.longitude);
+						arrowMarker.setPosition(position);
+						
+						if (follow_location)
+							google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
 						//alert('New location: ' + geo.latitude + ', ' + geo.longitude);
 					},
 					locationerror: function (   geo,
@@ -163,7 +169,8 @@ Ext.setup({
 						}
 					}
 				}
-			})
+			});
+		geo.updateLocation();
 		
 		new Ext.Panel({
 			fullscreen: true,
@@ -171,5 +178,49 @@ Ext.setup({
 			items: [google_map]
 		});
 		
+		var arrowMarker = new google.maps.Marker({
+			position: position,
+			title: 'My location',
+			map: google_map.map,
+			icon: arrow
+		});
+
+		var kurzparkzoneCoords = [
+			new google.maps.LatLng(48.219229,16.342913),
+			new google.maps.LatLng(48.209392,16.33742),
+			new google.maps.LatLng(48.203671,16.336733),
+			new google.maps.LatLng(48.196577,16.339479),
+			new google.maps.LatLng(48.186507,16.335703),
+			new google.maps.LatLng(48.186965,16.343599),
+			new google.maps.LatLng(48.180326,16.349436),
+			new google.maps.LatLng(48.180555,16.356302),
+			new google.maps.LatLng(48.188109,16.380335),
+			new google.maps.LatLng(48.187651,16.393038),
+			new google.maps.LatLng(48.182845,16.397844),
+			new google.maps.LatLng(48.180555,16.400934),
+			new google.maps.LatLng(48.192687,16.415697),
+			new google.maps.LatLng(48.201383,16.405741),
+			new google.maps.LatLng(48.203214,16.398874),
+			new google.maps.LatLng(48.212595,16.392351),
+			new google.maps.LatLng(48.213967,16.390635),
+			new google.maps.LatLng(48.229521,16.387545),
+			new google.maps.LatLng(48.241413,16.374498),
+			new google.maps.LatLng(48.236382,16.361795),
+			new google.maps.LatLng(48.235925,16.356646),
+			new google.maps.LatLng(48.232037,16.353899),
+			new google.maps.LatLng(48.230436,16.349092),
+			new google.maps.LatLng(48.22449,16.349779),
+			new google.maps.LatLng(48.219229,16.342913)
+		];
+		
+		var kurzparkzone = new google.maps.Polygon({
+			paths: kurzparkzoneCoords,
+			strokeColor: "#FF0000",
+			strokeOpacity: 0.8,
+			strokeWeight: 2,
+			fillColor: "#FF0000",
+			fillOpacity: 0.25,
+			map: google_map.map
+		});
 	}
 });
