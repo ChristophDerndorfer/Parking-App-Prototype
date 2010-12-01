@@ -7,11 +7,13 @@ Ext.setup({
 
 		// The following is accomplished with the Google Map API
 		var position = new google.maps.LatLng(48.2000950,16.3684658592);
-		var position = new google.maps.LatLng(48.18927,16.365391);
+		//var position = new google.maps.LatLng(48.18927,16.365391);
 		var follow_location = true;
 		var viewport;
 		var activeIW = null;
+		var activeMarker = null;
 		var popup;
+		var parkingspacemarker = null;
 		
 		infowindow = new google.maps.InfoWindow({
 			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
@@ -19,6 +21,10 @@ Ext.setup({
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
 			content: '<p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p>'
+		});
+		
+		iwFreeparking = new google.maps.InfoWindow({
+			content: '<p><b>Kurzparkzonen</b><img src="hq_images/arrow_hq.png" width="20" align="right"/></p>'
 		});
 
 		//Tracking Marker Image
@@ -80,9 +86,11 @@ Ext.setup({
 							//disable tracking
 							//trackingButton.ownerCt.setActive(trackingButton, false);
 							if (geo.latitude != null && geo.latitude != 0)
+							{
 								google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
 								google_map.map.setZoom(19);
 								popup.hide();
+							}
 						}
 					}, {
 						icon: 'parkbutton.png',
@@ -110,21 +118,27 @@ Ext.setup({
 								                    icon: 'freeparking_popup.png',
 								                    margin: '10',
 								                    handler: function() {
+														removeOtherMarkers();
 														popup.hide();
-														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.183458, 16.373768), new google.maps.LatLng(48.184558, 16.375768));
+														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.184458, 16.374768), new google.maps.LatLng(48.184458, 16.374768));
+														if (position.lat() != null && position.lat() != 0)
+															bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
 														
-														if (geo.latitude != null && geo.latitude != 0)
-															bounds.extend(new google.maps.LatLng(geo.latitude, geo.longitude));
-														
-														google_map.map.panToBounds(bounds);
+														google_map.map.fitBounds(bounds);
 															
-														var parkingspacemarker = new google.maps.Marker({ 
+														parkingspacemarker = new google.maps.Marker({ 
 															position: new google.maps.LatLng(48.184458, 16.374768),
 															title: 'Parkplatz 1',
 															map: google_map.map,
 															icon: point,
 															shadow: shadow,
 															clickable: true
+														});
+														
+														google.maps.event.addListener(parkingspacemarker, 'click', function(){
+															removeOtherIWs();
+															iwFreeparking.open(google_map.map, parkingspacemarker);
+															activeIW = iwFreeparking;
 														});
 								                	}
 								                }),
@@ -134,16 +148,22 @@ Ext.setup({
 								                    icon: 'garage_popup.png',
 								                    margin: '10',
 								                    handler: function() {
-								                		
+														removeOtherMarkers();
 														popup.hide();
-														google_map.map.panTo(new google.maps.LatLng(48.1984500,16.3680958592));
-														google_map.map.setZoom(15);
+														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.1984500,16.3680958592), new google.maps.LatLng(48.1984500,16.3680958592));
+														if (position.lat() != null && position.lat() != 0)
+															bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
+														google_map.map.fitBounds(bounds);
+														google_map.map.setZoom(google_map.map.getZoom() - 1);
 														var parkinggaragemarker = new google.maps.Marker({ 
 															position: new google.maps.LatLng(48.1984500,16.3680958592),
 															map: google_map.map,
 															icon: point,
-															shadow: shadow
+															shadow: shadow,
+															clickable: true
 														});
+														
+														activeMarker = parkinggaragemarker;
 								                	}
 								                })]
 								});
@@ -295,6 +315,11 @@ Ext.setup({
 				activeIW.close();
 		}
 		
+		function removeOtherMarkers() {
+			if (activeMarker != null)
+				activeMarker.setVisible(false);
+		}
+		
 		google.maps.event.addListener(infowindow, 'closeclick', function(){
 			activeIW = null;
 		});
@@ -311,5 +336,6 @@ Ext.setup({
 			iwKurzparkzone.open(google_map.map);
 			activeIW = iwKurzparkzone;
 		});
+		
 	}
 });
