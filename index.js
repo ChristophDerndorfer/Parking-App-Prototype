@@ -16,7 +16,7 @@ Ext.setup({
 		var parkingspacemarker = null;
 		
 		infowindow = new google.maps.InfoWindow({
-			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
+			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
 		});
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
@@ -24,7 +24,7 @@ Ext.setup({
 		});
 		
 		iwFreeparking = new google.maps.InfoWindow({
-			content: '<p><b>Kurzparkzonen</b><img src="hq_images/arrow_hq.png" width="20" align="right"/></p>'
+			content: '<p><b>Kurzparkzonen</b><img src="navi1.png" width="60" align="right"/></p>'
 		});
 		
 		
