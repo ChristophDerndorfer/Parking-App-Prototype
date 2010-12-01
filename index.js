@@ -7,11 +7,12 @@ Ext.setup({
 
 		// The following is accomplished with the Google Map API
 		var position = new google.maps.LatLng(48.2000950,16.3684658592);
-		var position = new google.maps.LatLng(48.18927,16.365391);
+		//var position = new google.maps.LatLng(48.18927,16.365391);
 		var follow_location = true;
 		var viewport;
 		var activeIW = null;
 		var popup;
+		var parkingspacemarker = null;
 		
 		infowindow = new google.maps.InfoWindow({
 			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
@@ -19,6 +20,10 @@ Ext.setup({
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
 			content: '<p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p>'
+		});
+		
+		iwFreeparking = new google.maps.InfoWindow({
+			content: '<p><b>Kurzparkzonen</b><img src="hq_images/arrow_hq.png" width="20" align="right"/></p>'
 		});
 
 		//Tracking Marker Image
@@ -118,13 +123,19 @@ Ext.setup({
 														
 														google_map.map.panToBounds(bounds);
 															
-														var parkingspacemarker = new google.maps.Marker({ 
+														parkingspacemarker = new google.maps.Marker({ 
 															position: new google.maps.LatLng(48.184458, 16.374768),
 															title: 'Parkplatz 1',
 															map: google_map.map,
 															icon: point,
 															shadow: shadow,
 															clickable: true
+														});
+														
+														google.maps.event.addListener(parkingspacemarker, 'click', function(){
+															removeOtherIWs();
+															iwFreeparking.open(google_map.map, parkingspacemarker);
+															activeIW = iwFreeparking;
 														});
 								                	}
 								                }),
@@ -142,7 +153,8 @@ Ext.setup({
 															position: new google.maps.LatLng(48.1984500,16.3680958592),
 															map: google_map.map,
 															icon: point,
-															shadow: shadow
+															shadow: shadow,
+															clickable: true
 														});
 								                	}
 								                })]
@@ -311,5 +323,6 @@ Ext.setup({
 			iwKurzparkzone.open(google_map.map);
 			activeIW = iwKurzparkzone;
 		});
+		
 	}
 });
