@@ -42,11 +42,11 @@ Ext.setup({
 			new google.maps.Point(25, 25)
 		  );
 
-		trackingButton = Ext.create({
-		   xtype   : 'button',
-		   iconMask: true,
-		   iconCls : 'locate'
-		});
+//		trackingButton = Ext.create({
+//		   xtype   : 'button',
+//		   iconMask: true,
+//		   iconCls : 'locate'
+//		});
 
 		toolbar = new Ext.Toolbar({
 				dock: 'top',
@@ -60,8 +60,10 @@ Ext.setup({
 						xtype: 'searchfield',
 						placeHolder: 'Search',
 						name: 'searchfield',
-						width: 120
-					}, {
+						width: '50%'
+					},{
+						xtype: 'spacer'
+					},{
 						icon: 'locationbutton.png',
 						title: 'Go to my location',
 						width: 50,
@@ -140,7 +142,7 @@ Ext.setup({
 
 			plugins : [
 				new Ext.plugin.GMap.Traffic({ hidden : true })
-			],
+			]
 
 		});
 		
@@ -227,7 +229,12 @@ Ext.setup({
 			position: new google.maps.LatLng(48.1984500,16.3680958592),
 			title: 'Parkgarage 1',
 			map: google_map.map,
-			icon: parkgarage
+			icon: parkgarage,
+			clickable: true
+		});
+		
+		google.maps.event.addListener(parkgarageMarker, 'click', function(){
+			infowindow.open(google_map.map, parkgarageMarker);
 		});
 	}
 });
