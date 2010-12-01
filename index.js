@@ -145,6 +145,32 @@ Ext.setup({
 							}
 							popup.show('pop');
 						}
+					},
+					{
+						icon: 'infobutton.png',
+						title: 'Nearest...',
+						width: 50,
+						padding: 5,
+						handler: function() {
+							if (!popup) {
+								popup = new Ext.Panel({
+									floating: true,
+									modal: true,
+									centered: true,
+									width: 300,
+									height: 350,
+									styleHtmlContent: true,
+									scroll: 'vertical',
+									html: '<p><b>Kurzparkzonen</b><br /><b>Preis:</b><br />0.5h - &#8364;0.60<br />1h - &#8364;1.20<br />1.5h - &#8364;1.80<br /><b>Zeiten:</b><br />Montag-Freitag, 8:00 - 22:00 Uhr<br />Samstags, Sonntags und Feiertags frei<br /><b>Verkaufsstellen:</b><br /></p>',
+									dockedItems: [{
+										dock: 'top',
+										xtype: 'toolbar',
+										title: 'Wien'
+									}]
+								});
+							}
+							popup.show('pop');
+						}
 					}
 				]
 			});
@@ -197,39 +223,7 @@ Ext.setup({
 				}
 			});
 		geo.updateLocation();
-		
-		infobutton = new Ext.Button({
-			icon: 'infobutton.png',
-			ui: 'normal',
-			floating: true,
-			width: 50,
-			height: 50,
-			x: 50,
-			y: 50,
-			padding: 5,
-			title: 'Info',
-			handler: function() {
-				if (!this.popup) {
-					this.popup = new Ext.Panel({
-						floating: true,
-						modal: true,
-						centered: true,
-						width: 300,
-						height: 350,
-						styleHtmlContent: true,
-						scroll: 'vertical',
-						html: '<p><b>Kurzparkzonen</b><br /><b>Preis:</b><br />0.5h - &#8364;0.60<br />1h - &#8364;1.20<br />1.5h - &#8364;1.80<br /><b>Zeiten:</b><br />Montag-Freitag, 8:00 - 22:00 Uhr<br />Samstags, Sonntags und Feiertags frei<br /><b>Verkaufsstellen:</b><br /></p>',
-						dockedItems: [{
-							dock: 'top',
-							xtype: 'toolbar',
-							title: 'Wien'
-						}]
-					});
-				}
-				this.popup.show('pop');
-			}
-		});
-		
+				
 		viewport = new Ext.Panel({
 			fullscreen: true,
 			dockedItems: [toolbar],
