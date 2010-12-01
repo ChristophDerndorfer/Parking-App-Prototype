@@ -10,7 +10,7 @@ Ext.setup({
 		var follow_location = true;
 
 		infowindow = new google.maps.InfoWindow({
-			content: 'Sencha Touch HQ'
+			content: '<p><b>Parkhaus 1</b><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
 		});
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
