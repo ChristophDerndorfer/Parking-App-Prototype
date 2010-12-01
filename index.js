@@ -27,6 +27,8 @@ Ext.setup({
 			content: '<p><b>Kurzparkzonen</b><img src="hq_images/arrow_hq.png" width="20" align="right"/></p>'
 		});
 		
+		
+		//needed for layer panel
 		Ext.regModel('Layers', {
 			fields: ['Layer']});
 		
@@ -40,7 +42,8 @@ Ext.setup({
 			data: [
 			       {Layer: 'Parkgaragen'},
 			       {Layer: 'Ticketautomaten'},
-			       {Layer: '...'}		   
+			       {Layer: 'Tankstellen'},
+			       {Layer: 'Polizeistationen'}		   
 			]
 			
 		});
@@ -259,18 +262,24 @@ Ext.setup({
 										handler: function() {	
 								 		    this.actions.hide();
 											popup = new Ext.Panel({
+												ui: 'light',
 												floating: true,
-												modal: true,
+												//modal: true,
 												centered: true,
-												width: 300,
-												height: 350,
-												styleHtmlContent: true,
-												scroll: 'vertical',
+												//width: 300,
+												//height: 350,
+												//styleHtmlContent: true,
+												
 												items : [{
 													xtype: 'list',
+													ui: 'light',
+													scroll: 'vertical',
 													store: layerStore,
 													cls: 'android',
-													multiSelect : true,
+													//singleSelect: false,
+													multiSelect: true,
+													simpleSelect: true,
+													width: 280,
 													itemTpl: '<div class="Layers"><strong>{Layer}</strong></div>'
 												}],
 												dockedItems: [{
