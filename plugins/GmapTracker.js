@@ -28,7 +28,7 @@ Ext.plugin.GMap.Tracker = Ext.extend(Ext.util.Observable, {
      * @cfg {Boolean} updateInterval
      * The autoUpdate polling interval. (Defaults to 90000.)
      */
-    updateInterval : 90000,
+    updateInterval : 5000,
 
     /**
      * @constructor
