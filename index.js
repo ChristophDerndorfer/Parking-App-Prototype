@@ -90,7 +90,7 @@ Ext.setup({
 						width: 50,
 						padding: 5,
 						handler: function() {
-							if (!popup) {
+							
 								popup = new Ext.Panel({
 									floating: true,
 									modal: true,
@@ -142,7 +142,7 @@ Ext.setup({
 								                	}
 								                })]
 								});
-							}
+							
 							popup.show('pop');
 						}
 					},
@@ -152,7 +152,7 @@ Ext.setup({
 						width: 50,
 						padding: 5,
 						handler: function() {
-							if (!popup) {
+				
 								popup = new Ext.Panel({
 									floating: true,
 									modal: true,
@@ -168,7 +168,7 @@ Ext.setup({
 										title: 'Wien'
 									}]
 								});
-							}
+							
 							popup.show('pop');
 						}
 					}
@@ -223,11 +223,12 @@ Ext.setup({
 				}
 			});
 		geo.updateLocation();
-				
+		
+		
 		viewport = new Ext.Panel({
 			fullscreen: true,
 			dockedItems: [toolbar],
-			items: [google_map, infobutton],
+			items: [google_map],
 			layout: 'fit'
 		});
 		
