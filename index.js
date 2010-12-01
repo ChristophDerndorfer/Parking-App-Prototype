@@ -8,7 +8,10 @@ Ext.setup({
 		// The following is accomplished with the Google Map API
 		var position = new google.maps.LatLng(48.2000950,16.3684658592);
 		var follow_location = true;
-
+		var viewport;
+		var activeIW = null;
+		var popup;
+		
 		infowindow = new google.maps.InfoWindow({
 			content: 'Sencha Touch HQ'
 		});
@@ -84,8 +87,8 @@ Ext.setup({
 						width: 50,
 						padding: 5,
 						handler: function() {
-							if (!this.popup) {
-								this.popup = new Ext.Panel({
+							if (!popup) {
+								popup = new Ext.Panel({
 									floating: true,
 									modal: true,
 									centered: false,
@@ -113,37 +116,12 @@ Ext.setup({
 								                    icon: 'garage_popup.png',
 								                    margin: '10',
 								                    handler: function() {
-								                		
+								                		popup.hide();
 								                	}
 								                })]
 								});
 							}
-							this.popup.show('pop');
-						}
-					}, {
-						icon: 'infobutton.png',
-						width: 50,
-						padding: 5,
-						title: 'Info',
-						handler: function() {
-							if (!this.popup) {
-								this.popup = new Ext.Panel({
-									floating: true,
-									modal: true,
-									centered: true,
-									width: 300,
-									height: 350,
-									styleHtmlContent: true,
-									scroll: 'vertical',
-									html: '<p><b>Kurzparkzonen</b><br /><b>Preis:</b><br />0.5h - &#8364;0.60<br />1h - &#8364;1.20<br />1.5h - &#8364;1.80<br /><b>Zeiten:</b><br />Montag-Freitag, 8:00 - 22:00 Uhr<br />Samstags, Sonntags und Feiertags frei<br /><b>Verkaufsstellen:</b><br /></p>',
-									dockedItems: [{
-										dock: 'top',
-										xtype: 'toolbar',
-										title: 'Wien'
-									}]
-								});
-							}
-							this.popup.show('pop');
+							popup.show('pop');
 						}
 					}
 				]
@@ -198,10 +176,43 @@ Ext.setup({
 			});
 		geo.updateLocation();
 		
-		new Ext.Panel({
+		infobutton = new Ext.Button({
+			icon: 'infobutton.png',
+			ui: 'normal',
+			floating: true,
+			width: 50,
+			height: 50,
+			x: 50,
+			y: 50,
+			padding: 5,
+			title: 'Info',
+			handler: function() {
+				if (!this.popup) {
+					this.popup = new Ext.Panel({
+						floating: true,
+						modal: true,
+						centered: true,
+						width: 300,
+						height: 350,
+						styleHtmlContent: true,
+						scroll: 'vertical',
+						html: '<p><b>Kurzparkzonen</b><br /><b>Preis:</b><br />0.5h - &#8364;0.60<br />1h - &#8364;1.20<br />1.5h - &#8364;1.80<br /><b>Zeiten:</b><br />Montag-Freitag, 8:00 - 22:00 Uhr<br />Samstags, Sonntags und Feiertags frei<br /><b>Verkaufsstellen:</b><br /></p>',
+						dockedItems: [{
+							dock: 'top',
+							xtype: 'toolbar',
+							title: 'Wien'
+						}]
+					});
+				}
+				this.popup.show('pop');
+			}
+		});
+		
+		viewport = new Ext.Panel({
 			fullscreen: true,
 			dockedItems: [toolbar],
-			items: [google_map]
+			items: [google_map, infobutton],
+			layout: 'fit'
 		});
 		
 		var arrowMarker = new google.maps.Marker({
@@ -257,14 +268,26 @@ Ext.setup({
 			clickable: true
 		});
 		
+		function removeOtherIWs() {
+			if (activeIW != null)
+				activeIW.close();
+		}
+		
+		google.maps.event.addListener(infowindow, 'closeclick', function(){
+			activeIW = null;
+		});
+		
 		google.maps.event.addListener(parkgarageMarker, 'click', function(){
+			removeOtherIWs();
 			infowindow.open(google_map.map, parkgarageMarker);
+			activeIW = infowindow;
 		});
 		
 		google.maps.event.addListener(kurzparkzone, 'click', function(event){
-			
+			removeOtherIWs();
 			iwKurzparkzone.setPosition(event.latLng);
 			iwKurzparkzone.open(google_map.map);
+			activeIW = iwKurzparkzone;
 		});
 	}
 });
