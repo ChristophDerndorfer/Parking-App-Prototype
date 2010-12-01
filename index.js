@@ -11,6 +11,7 @@ Ext.setup({
 		var follow_location = true;
 		var viewport;
 		var activeIW = null;
+		var activeMarker = null;
 		var popup;
 		
 		infowindow = new google.maps.InfoWindow({
@@ -112,6 +113,7 @@ Ext.setup({
 								                    icon: 'freeparking_popup.png',
 								                    margin: '10',
 								                    handler: function() {
+														removeOtherMarkers();
 														popup.hide();
 														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.184458, 16.374768), new google.maps.LatLng(48.184458, 16.374768));
 														if (position.lat() != null && position.lat() != 0)
@@ -127,6 +129,7 @@ Ext.setup({
 															shadow: shadow,
 															clickable: true
 														});
+														activeMarker = parkingspacemarker;
 								                	}
 								                }),
 								                new Ext.Button({
@@ -135,9 +138,8 @@ Ext.setup({
 								                    icon: 'garage_popup.png',
 								                    margin: '10',
 								                    handler: function() {
-								                		
+														removeOtherMarkers();
 														popup.hide();
-														
 														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.1984500,16.3680958592), new google.maps.LatLng(48.1984500,16.3680958592));
 														if (position.lat() != null && position.lat() != 0)
 															bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
@@ -149,6 +151,8 @@ Ext.setup({
 															icon: point,
 															shadow: shadow
 														});
+														
+														activeMarker = parkinggaragemarker;
 								                	}
 								                })]
 								});
@@ -298,6 +302,11 @@ Ext.setup({
 		function removeOtherIWs() {
 			if (activeIW != null)
 				activeIW.close();
+		}
+		
+		function removeOtherMarkers() {
+			if (activeMarker != null)
+				activeMarker.setVisible(false);
 		}
 		
 		google.maps.event.addListener(infowindow, 'closeclick', function(){
