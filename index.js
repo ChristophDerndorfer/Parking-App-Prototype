@@ -12,6 +12,10 @@ Ext.setup({
 		infowindow = new google.maps.InfoWindow({
 			content: 'Sencha Touch HQ'
 		});
+		
+		iwKurzparkzone = new google.maps.InfoWindow({
+			content: 'Kurzparkzone info'
+		});
 
 		//Tracking Marker Image
 		point = new google.maps.MarkerImage(
