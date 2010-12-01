@@ -80,9 +80,11 @@ Ext.setup({
 							//disable tracking
 							//trackingButton.ownerCt.setActive(trackingButton, false);
 							if (geo.latitude != null && geo.latitude != 0)
+							{
 								google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
 								google_map.map.setZoom(19);
 								popup.hide();
+							}
 						}
 					}, {
 						icon: 'parkbutton.png',
@@ -111,12 +113,11 @@ Ext.setup({
 								                    margin: '10',
 								                    handler: function() {
 														popup.hide();
-														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.183458, 16.373768), new google.maps.LatLng(48.184558, 16.375768));
+														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.184458, 16.374768), new google.maps.LatLng(48.184458, 16.374768));
+														if (position.lat() != null && position.lat() != 0)
+															bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
 														
-														if (geo.latitude != null && geo.latitude != 0)
-															bounds.extend(new google.maps.LatLng(geo.latitude, geo.longitude));
-														
-														google_map.map.panToBounds(bounds);
+														google_map.map.fitBounds(bounds);
 															
 														var parkingspacemarker = new google.maps.Marker({ 
 															position: new google.maps.LatLng(48.184458, 16.374768),
@@ -136,8 +137,12 @@ Ext.setup({
 								                    handler: function() {
 								                		
 														popup.hide();
-														google_map.map.panTo(new google.maps.LatLng(48.1984500,16.3680958592));
-														google_map.map.setZoom(15);
+														
+														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.1984500,16.3680958592), new google.maps.LatLng(48.1984500,16.3680958592));
+														if (position.lat() != null && position.lat() != 0)
+															bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
+														google_map.map.fitBounds(bounds);
+														google_map.map.setZoom(google_map.map.getZoom() - 1);
 														var parkinggaragemarker = new google.maps.Marker({ 
 															position: new google.maps.LatLng(48.1984500,16.3680958592),
 															map: google_map.map,
