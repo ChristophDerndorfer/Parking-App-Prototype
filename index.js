@@ -60,7 +60,7 @@ Ext.setup({
 						xtype: 'searchfield',
 						placeHolder: 'Search',
 						name: 'searchfield',
-						width: '50%'
+						width: 120
 					},{
 						xtype: 'spacer'
 					},{
@@ -88,10 +88,30 @@ Ext.setup({
 									x: 5,
 									y: 50,
 									width: 300,
-									height: 100,
-									styleHtmlContent: true,
+									height: 150,
+								    style: {
+										backgroundColor: '#000'
+									},
 									scroll: 'vertical',
-									html: '<p align="center"><img src="freeparking_popup.png"> &nbsp; <img src="garage_popup.png"></p>'
+									items : [
+								                new Ext.Button({
+								                    ui  : 'android',
+								                    text: 'Free Parking',
+								                    icon: 'freeparking_popup.png',
+								                    margin: '10',
+								                    handler: function() {
+								                		
+								                	}
+								                }),
+								                new Ext.Button({
+								                    ui  : 'android',
+								                    text: 'Garage Parking',
+								                    icon: 'garage_popup.png',
+								                    margin: '10',
+								                    handler: function() {
+								                		
+								                	}
+								                })]
 								});
 							}
 							this.popup.show('pop');
@@ -119,7 +139,7 @@ Ext.setup({
 									}]
 								});
 							}
-							this.popup.show('pop')
+							this.popup.show('pop');
 						}
 					}
 				]
