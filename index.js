@@ -111,8 +111,13 @@ Ext.setup({
 								                    margin: '10',
 								                    handler: function() {
 														popup.hide();
-														google_map.map.panTo(new google.maps.LatLng(48.184458, 16.374768));
-														google_map.map.setZoom(16);
+														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.183458, 16.373768), new google.maps.LatLng(48.184558, 16.375768));
+														
+														if (geo.latitude != null && geo.latitude != 0)
+															bounds.extend(new google.maps.LatLng(geo.latitude, geo.longitude));
+														
+														google_map.map.panToBounds(bounds);
+															
 														var parkingspacemarker = new google.maps.Marker({ 
 															position: new google.maps.LatLng(48.184458, 16.374768),
 															title: 'Parkplatz 1',
