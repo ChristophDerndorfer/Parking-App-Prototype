@@ -10,11 +10,11 @@ Ext.setup({
 		var follow_location = true;
 
 		infowindow = new google.maps.InfoWindow({
-			content: '<p><b>Parkhaus 1</b><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
+			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
 		});
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
-			content: 'Kurzparkzone info'
+			content: '<p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p>'
 		});
 
 		//Tracking Marker Image
