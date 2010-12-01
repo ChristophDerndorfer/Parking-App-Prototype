@@ -199,6 +199,65 @@ Ext.setup({
 					}
 				]
 			});
+		
+		hardwareButtons = new Ext.Toolbar({
+			dock: 'bottom',
+			xtype: 'toolbar',
+			ui : 'light',
+			defaults: {
+				iconMask: false
+			},
+			items: [
+				{
+					icon: 'back1.png',
+					width: 50,
+					padding: 5,
+					handler : function(){
+					//disable tracking
+					//trackingButton.ownerCt.setActive(trackingButton, false);
+					if (geo.latitude != null && geo.latitude != 0)
+					{
+						google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
+						google_map.map.setZoom(19);
+						popup.hide();
+					}
+				}
+				},
+				{
+					xtype: 'spacer'
+				},
+				{
+					icon: 'system1.png',
+					width: 50,
+					padding: 5,
+					handler : function(){
+						if (!this.actions){
+							this.actions = new Ext.ActionSheet ({
+								items: 
+								[
+								 	{
+								 		text: 'Layer Settings',
+								 		handler: Ext.emptyFn
+								 	},
+								 	{
+								 		text: 'About Us',
+								 		handler: Ext.emptyFn
+								 	},
+								 	{
+								 		text: 'Cancel',
+								 		scope: this,
+								 		handler: function(){
+								 			this.actions.hide();
+								 		}
+								 	},
+								]
+							});
+						}
+						this.actions.show();
+					}
+				}
+				]
+			});
 
 		google_map = new Ext.Map({
 			title: 'Map',
@@ -252,7 +311,7 @@ Ext.setup({
 		
 		viewport = new Ext.Panel({
 			fullscreen: true,
-			dockedItems: [toolbar],
+			dockedItems: [toolbar, hardwareButtons],
 			items: [google_map],
 			layout: 'fit'
 		});
