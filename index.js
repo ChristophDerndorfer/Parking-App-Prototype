@@ -15,7 +15,7 @@ Ext.setup({
 		var popup;
 		var parkingspacemarker = null;
 		
-		infowindow = new google.maps.InfoWindow({
+		iwParkhaus1 = new google.maps.InfoWindow({
 			content: '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
 		});
 		
@@ -27,7 +27,7 @@ Ext.setup({
 			content: '<p><b>Free parking zone</b><img src="navi1.png" width="60" align="right"/></p>'
 		});
 		
-		iwParkhaus = new google.maps.InfoWindow({
+		iwParkhaus2 = new google.maps.InfoWindow({
 			content: '<p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
 		});
 		
@@ -52,7 +52,7 @@ Ext.setup({
 		
 		//needed for search results
 		Ext.regModel('Search Results', {
-			fields: ['Result']});
+			fields: ['Result', 'lat', 'lng']});
 		
 		searchResultStore = new Ext.data.Store({
 		
@@ -69,6 +69,23 @@ Ext.setup({
 			       {Result: 'Result #5', lat: 48.20127, lng: 16.351391},
 			       {Result: 'Result #6', lat: 48.21927, lng: 16.381391},
 			       {Result: 'Result #7', lat: 48.21127, lng: 16.391391}
+			]
+		});
+		
+		//needed for parking garage results
+		Ext.regModel('Parking Garage Search Results', {
+			fields: ['Result', 'lat', 'lng', 'dist']});
+		
+		pgSearchResultStore = new Ext.data.Store({
+		
+			model: 'Parking Garage Search Results',
+			sorters: 'Result',
+			getGroupString : function(record) {
+				return record.get('Result') [0];
+			},
+			data: [
+			       {Result: 'Parkhaus #1', lat: 48.1984500, lng: 16.3680958592, dist: 1.1},
+			       {Result: 'Parkhaus #2', lat: 48.2084500, lng: 16.3780958592, dist: 3}
 			]
 		});
 
@@ -138,7 +155,7 @@ Ext.setup({
 			searchResultList.deselect(searchResultList.getSelectedNodes());
 			
 			activeMarker = searchresultmarker;
-		})
+		});
 		
 		searchfield.on('action', function() {
 			popup = new Ext.Panel({
@@ -159,6 +176,60 @@ Ext.setup({
 			popup.show('pop');
 		});
 		
+		pgSearchResultList = new Ext.List({
+			xtype: 'list',
+			ui: 'black',
+			scroll: 'vertical',
+			store: pgSearchResultStore,
+			width: 280,
+			singleSelect: false,
+			multiSelect: false,
+			simpleSelect: true,
+			itemTpl: '<div class="Search Results"><strong>{Result} ({dist} km)</strong></div>'
+		});
+		
+		pgSearchResultList.on('itemtap', function(dataView, index, element, event) {
+			removeOtherMarkers();
+			removeOtherIWs();
+			popup.hide();
+			var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(pgSearchResultStore.getAt(index).get('lat'), pgSearchResultStore.getAt(index).get('lng')), new google.maps.LatLng(pgSearchResultStore.getAt(index).get('lat'), pgSearchResultStore.getAt(index).get('lng')));
+			if (position.lat() != null && position.lat() != 0)
+				bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
+			google_map.map.fitBounds(bounds);
+			google_map.map.setZoom(google_map.map.getZoom() - 1);
+			var pgSearchresultmarker = new google.maps.Marker({ 
+				position: new google.maps.LatLng(pgSearchResultStore.getAt(index).get('lat'), pgSearchResultStore.getAt(index).get('lng')),
+				map: google_map.map,
+				icon: point,
+				shadow: shadow,
+				clickable: false
+			});
+			pgSearchResultList.deselect(pgSearchResultList.getSelectedNodes());
+			
+			activeMarker = pgSearchresultmarker;
+			if (index == 0)
+			{
+				iwParkhaus1.open(google_map.map, pgSearchresultmarker);
+				activeIW = iwParkhaus1;
+				
+				google.maps.event.addListener(pgSearchresultmarker, 'click', function(){
+					removeOtherIWs();
+					iwParkhaus1.open(google_map.map, pgSearchresultmarker);
+					activeIW = iwParkhaus1;
+				});
+			}
+			else
+			{
+				iwParkhaus2.open(google_map.map, pgSearchresultmarker);
+				activeIW = iwParkhaus1;
+				
+				google.maps.event.addListener(pgSearchresultmarker, 'click', function(){
+					removeOtherIWs();
+					iwParkhaus2.open(google_map.map, pgSearchresultmarker);
+					activeIW = iwParkhaus2;
+				});
+			}
+		});
 
 		toolbar = new Ext.Toolbar({
 				dock: 'top',
@@ -245,31 +316,23 @@ Ext.setup({
 								                    icon: 'garage_button.png',
 								                    margin: '10',
 								                    handler: function() {
-														removeOtherMarkers();
-														popup.hide();
-														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.1984500,16.3680958592), new google.maps.LatLng(48.1984500,16.3680958592));
-														if (position.lat() != null && position.lat() != 0)
-															bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
-														google_map.map.fitBounds(bounds);
-														google_map.map.setZoom(google_map.map.getZoom() - 1);
-														var parkinggaragemarker = new google.maps.Marker({ 
-															position: new google.maps.LatLng(48.1984500,16.3680958592),
-															map: google_map.map,
-															icon: point,
-															shadow: shadow,
-															clickable: true
-														});
+								                    	popup.hide();
+														popup = new Ext.Panel({
+																floating: true,
+																modal: true,
+																centered: true,
+																height: 350,
+																scroll: 'vertical',
+																ui: 'dark',
+																items : pgSearchResultList,
+																dockedItems: [{
+																	dock: 'top',
+																	xtype: 'toolbar',
+																	title: 'Nearest Parking Garages'
+																}]
+															});
 														
-														activeMarker = parkinggaragemarker;
-														
-														infowindow.open(google_map.map, parkinggaragemarker);
-														activeIW = infowindow;
-														
-														google.maps.event.addListener(parkinggaragemarker, 'click', function(){
-															removeOtherIWs();
-															infowindow.open(google_map.map, parkinggaragemarker);
-															activeIW = infowindow;
-														});
+														popup.show('pop');
 								                	}
 								                })]
 								});
@@ -546,20 +609,20 @@ Ext.setup({
 				activeMarker.setVisible(false);
 		}
 		
-		google.maps.event.addListener(infowindow, 'closeclick', function(){
+		google.maps.event.addListener(iwParkhaus1, 'closeclick', function(){
 			activeIW = null;
 		});
 		
 		google.maps.event.addListener(parkgarageMarker, 'click', function(){
 			removeOtherIWs();
-			infowindow.open(google_map.map, parkgarageMarker);
-			activeIW = infowindow;
+			iwParkhaus1.open(google_map.map, parkgarageMarker);
+			activeIW = iwParkhaus1;
 		});
 		
 		google.maps.event.addListener(parkgarageMarker2, 'click', function(){
 			removeOtherIWs();
-			iwParkhaus.open(google_map.map, parkgarageMarker2);
-			activeIW = iwParkhaus;
+			iwParkhaus2.open(google_map.map, parkgarageMarker2);
+			activeIW = iwParkhaus2;
 		});
 		
 		google.maps.event.addListener(kurzparkzone, 'click', function(event){
