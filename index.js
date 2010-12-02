@@ -250,10 +250,10 @@ Ext.setup({
 						handler : function(){
 							//disable tracking
 							//trackingButton.ownerCt.setActive(trackingButton, false);
-							if (geo.latitude != null && geo.latitude != 0)
+							if (position.lat() != null && position.lat() != 0)
 							{
-								google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
-								google_map.map.setZoom(19);
+								google_map.map.panTo(new google.maps.LatLng(position.lat(), position.lng()));
+								google_map.map.setZoom(18);
 								popup.hide();
 							}
 						}
@@ -280,7 +280,7 @@ Ext.setup({
 								                    text: 'Free Parking',
 								                    icon: 'freeparking_button.png',
 								                    margin: '10',
-								                    handler: function() {
+								                    handler: function(event) {
 														removeOtherMarkers();
 														popup.hide();
 														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.184458, 16.374768), new google.maps.LatLng(48.184458, 16.374768));
@@ -308,6 +308,7 @@ Ext.setup({
 															iwFreeparking.open(google_map.map, parkingspacemarker);
 															activeIW = iwFreeparking;
 														});
+														event.stop();
 								                	}
 								                }),
 								                new Ext.Button({
@@ -315,7 +316,7 @@ Ext.setup({
 								                    text: 'Garage Parking',
 								                    icon: 'garage_button.png',
 								                    margin: '10',
-								                    handler: function() {
+								                    handler: function(event) {
 								                    	popup.hide();
 														popup = new Ext.Panel({
 																floating: true,
@@ -333,6 +334,7 @@ Ext.setup({
 															});
 														
 														popup.show('pop');
+														event.stop();
 								                	}
 								                })]
 								});
@@ -345,7 +347,7 @@ Ext.setup({
 						title: 'Nearest...',
 						width: 50,
 						padding: 5,
-						handler: function() {
+						handler: function(event) {
 				
 								popup = new Ext.Panel({
 									floating: true,
@@ -364,6 +366,7 @@ Ext.setup({
 								});
 							
 							popup.show('pop');
+							event.stop();
 						}
 					}
 				]
@@ -384,10 +387,10 @@ Ext.setup({
 					handler : function(){
 					//disable tracking
 					//trackingButton.ownerCt.setActive(trackingButton, false);
-					if (geo.latitude != null && geo.latitude != 0)
+					if (position.lat() != null && position.lat() != 0)
 					{
-						google_map.map.panTo(new google.maps.LatLng(geo.latitude, geo.longitude));
-						google_map.map.setZoom(19);
+						google_map.map.panTo(new google.maps.LatLng(position.lat(), position.lng()));
+						google_map.map.setZoom(18);
 						popup.hide();
 					}
 				}
