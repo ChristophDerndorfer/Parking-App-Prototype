@@ -257,7 +257,7 @@ Ext.setup({
 								items: 
 								[
 								 	{
-								 		text: 'Layer Settings:',
+								 		text: 'Layer Settings',
 								 		scope: this,
 										handler: function() {	
 								 		    this.actions.hide();
@@ -305,11 +305,11 @@ Ext.setup({
 												height: 350,
 												styleHtmlContent: true,
 												scroll: 'vertical',
-												html: '<p><b>cnm_studios</b><br /><b></b><b>Developer:</b><br />Christoph<br />Michael<br />Nem<br /><br /></p>',
+												html: '<p><b>CNM Studios</b><br />Christoph (Producer)<br />Michael (Designer)<br />Nem (Developer)<br /></p>',
 												dockedItems: [{
 													dock: 'top',
 													xtype: 'toolbar',
-													title: 'About Us:'
+													title: 'About Us'
 												}]
 											});
 										
