@@ -134,6 +134,9 @@ Ext.setup({
 			singleSelect: false,
 			multiSelect: false,
 			simpleSelect: true,
+			onItemDisclosure: function(record, btn, index) {
+				Ext.Msg.alert('Navigation', 'Wollen Sie in die Navigation wechseln?', Ext.emptyFn);
+			},
 			itemTpl: '<div class="Search Results"><strong>{Result}</strong></div>'
 		});
 		
@@ -176,6 +179,8 @@ Ext.setup({
 			popup.show('pop');
 		});
 		
+
+		
 		pgSearchResultList = new Ext.List({
 			xtype: 'list',
 			ui: 'black',
@@ -185,6 +190,9 @@ Ext.setup({
 			singleSelect: false,
 			multiSelect: false,
 			simpleSelect: true,
+			onItemDisclosure: function(record, btn, index) {
+				Ext.Msg.alert('Navigation', 'Wollen Sie in die Navigation wechseln?', Ext.emptyFn);
+			},
 			itemTpl: '<div class="Search Results"><strong>{Result} ({dist} km)</strong></div>'
 		});
 		
