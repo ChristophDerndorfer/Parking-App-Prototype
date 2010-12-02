@@ -16,7 +16,7 @@ Ext.setup({
 		var parkingspacemarker = null;
 		
 		infowindow = new google.maps.InfoWindow({
-			content: '<p><b>Parkhaus 1</b><img src="hq_images/disabled_parking_hq.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
+			content: '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
 		});
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
@@ -26,7 +26,6 @@ Ext.setup({
 		iwFreeparking = new google.maps.InfoWindow({
 			content: '<p><b>Kurzparkzonen</b><img src="navi1.png" width="60" align="right"/></p>'
 		});
-		
 		
 		//needed for layer panel
 		Ext.regModel('Layers', {
@@ -45,7 +44,25 @@ Ext.setup({
 			       {Layer: 'Tankstellen'},
 			       {Layer: 'Polizeistationen'}		   
 			]
-			
+		});
+		
+		//needed for search results
+		Ext.regModel('Search Results', {
+			fields: ['Result']});
+		
+		searchResultStore = new Ext.data.Store({
+		
+			model: 'Search Results',
+			sorters: 'Result',
+			getGroupString : function(record) {
+				return record.get('Result') [0];
+			},
+			data: [
+			       {Result: 'Result #1'},
+			       {Result: 'Result #2'},
+			       {Result: 'Result #3'},
+			       {Result: 'Result #4'}		   
+			]
 		});
 
 		//Tracking Marker Image
@@ -83,6 +100,42 @@ Ext.setup({
 //		   iconCls : 'locate'
 //		});
 
+		var searchfield = new Ext.form.Search({
+			xtype: 'searchfield',
+			placeHolder: 'Search',
+			name: 'searchfield',
+			width: 120
+		});
+		
+		searchfield.on('action', function() {
+			popup = new Ext.Panel({
+					floating: true,
+					modal: true,
+					centered: true,
+					height: 350,
+					scroll: 'vertical',
+					ui: 'dark',
+					items : [{
+						xtype: 'list',
+						ui: 'black',
+						scroll: 'vertical',
+						store: searchResultStore,
+						width: 280,
+						singleSelect: true,
+						multiSelect: false,
+						simpleSelect: true,
+						itemTpl: '<div class="Search Results"><strong>{Result}</strong></div>'
+					}],
+					dockedItems: [{
+						dock: 'top',
+						xtype: 'toolbar',
+						title: 'Search results'
+					}]
+				});
+			
+			popup.show('pop');
+		});
+
 		toolbar = new Ext.Toolbar({
 				dock: 'top',
 				xtype: 'toolbar',
@@ -91,12 +144,8 @@ Ext.setup({
 					iconMask: false
 				},
 				items: [
-					{
-						xtype: 'searchfield',
-						placeHolder: 'Search',
-						name: 'searchfield',
-						width: 120
-					},{
+					searchfield
+					,{
 						xtype: 'spacer'
 					},{
 						icon: 'locationbutton.png',
@@ -128,15 +177,13 @@ Ext.setup({
 									y: 50,
 									width: 300,
 									height: 150,
-								    style: {
-										backgroundColor: '#000'
-									},
+								    ui: 'dark',
 									scroll: 'vertical',
 									items : [
 								                new Ext.Button({
 								                    ui  : 'android',
 								                    text: 'Free Parking',
-								                    icon: 'freeparking_popup.png',
+								                    icon: 'freeparking_button.png',
 								                    margin: '10',
 								                    handler: function() {
 														removeOtherMarkers();
@@ -166,7 +213,7 @@ Ext.setup({
 								                new Ext.Button({
 								                    ui  : 'android',
 								                    text: 'Garage Parking',
-								                    icon: 'garage_popup.png',
+								                    icon: 'garage_button.png',
 								                    margin: '10',
 								                    handler: function() {
 														removeOtherMarkers();
