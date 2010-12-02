@@ -421,26 +421,28 @@ Ext.setup({
 										handler: function() {	
 								 		    this.actions.hide();
 											popup = new Ext.Panel({
-												ui: 'light',
+												ui: 'dark',
 												floating: true,
 												//modal: true,
 												centered: true,
-												//width: 300,
+												width: 200,
 												//height: 350,
 												//styleHtmlContent: true,
 												
-												items : [{
-													xtype: 'list',
-													ui: 'light',
-													scroll: 'vertical',
-													store: layerStore,
-													cls: 'android',
-													//singleSelect: false,
-													multiSelect: true,
-													simpleSelect: true,
-													width: 280,
-													itemTpl: '<div class="Layers"><strong>{Layer}</strong></div>'
-												}],
+												items: [{
+													xtype: 'checkboxfield',
+													name: 'parkhouses',
+													label: 'Parkgaragen'
+												},{
+													xtype: 'checkboxfield',
+													name: 'parkingmachines',
+													label: 'Parkautomaten'
+												},{
+													xtype: 'checkboxfield',
+													name: 'freeparking',
+													label: 'Gratiszonen'
+												},
+												],
 												dockedItems: [{
 													dock: 'top',
 													xtype: 'toolbar',
