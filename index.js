@@ -58,10 +58,13 @@ Ext.setup({
 				return record.get('Result') [0];
 			},
 			data: [
-			       {Result: 'Result #1'},
-			       {Result: 'Result #2'},
-			       {Result: 'Result #3'},
-			       {Result: 'Result #4'}		   
+			       {Result: 'Result #1', lat: 48.208927, lng: 16.373391},
+			       {Result: 'Result #2', lat: 48.20577, lng: 16.376391},
+			       {Result: 'Result #3', lat: 48.21427, lng: 16.378391},
+			       {Result: 'Result #4', lat: 48.21127, lng: 16.361391},
+			       {Result: 'Result #5', lat: 48.20127, lng: 16.351391},
+			       {Result: 'Result #6', lat: 48.21927, lng: 16.381391},
+			       {Result: 'Result #7', lat: 48.21127, lng: 16.391391}
 			]
 		});
 
@@ -94,18 +97,44 @@ Ext.setup({
 			new google.maps.Point(25, 25)
 		  );
 
-//		trackingButton = Ext.create({
-//		   xtype   : 'button',
-//		   iconMask: true,
-//		   iconCls : 'locate'
-//		});
-
 		var searchfield = new Ext.form.Search({
 			xtype: 'searchfield',
 			placeHolder: 'Search',
 			name: 'searchfield',
 			width: 120
 		});
+		
+		searchResultList = new Ext.List({
+			xtype: 'list',
+			ui: 'black',
+			scroll: 'vertical',
+			store: searchResultStore,
+			width: 280,
+			singleSelect: false,
+			multiSelect: false,
+			simpleSelect: true,
+			itemTpl: '<div class="Search Results"><strong>{Result}</strong></div>'
+		});
+		
+		searchResultList.on('itemtap', function(dataView, index, element, event) {
+			removeOtherMarkers();
+			popup.hide();
+			var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')), new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')));
+			if (position.lat() != null && position.lat() != 0)
+				bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
+			google_map.map.fitBounds(bounds);
+			google_map.map.setZoom(google_map.map.getZoom() - 1);
+			var searchresultmarker = new google.maps.Marker({ 
+				position: new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')),
+				map: google_map.map,
+				icon: point,
+				shadow: shadow,
+				clickable: false
+			});
+			searchResultList.deselect(searchResultList.getSelectedNodes());
+			
+			activeMarker = searchresultmarker;
+		})
 		
 		searchfield.on('action', function() {
 			popup = new Ext.Panel({
@@ -115,17 +144,7 @@ Ext.setup({
 					height: 350,
 					scroll: 'vertical',
 					ui: 'dark',
-					items : [{
-						xtype: 'list',
-						ui: 'black',
-						scroll: 'vertical',
-						store: searchResultStore,
-						width: 280,
-						singleSelect: true,
-						multiSelect: false,
-						simpleSelect: true,
-						itemTpl: '<div class="Search Results"><strong>{Result}</strong></div>'
-					}],
+					items : searchResultList,
 					dockedItems: [{
 						dock: 'top',
 						xtype: 'toolbar',
@@ -135,6 +154,7 @@ Ext.setup({
 			
 			popup.show('pop');
 		});
+		
 
 		toolbar = new Ext.Toolbar({
 				dock: 'top',
