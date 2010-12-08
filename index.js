@@ -14,6 +14,7 @@ Ext.setup({
 		var activeMarker = null;
 		var popup;
 		var parkingspacemarker = null;
+		var view = null;
 		
 		iwParkhaus1 = new google.maps.InfoWindow({
 			content: '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>'
@@ -127,7 +128,7 @@ Ext.setup({
 		
 		searchResultList = new Ext.List({
 			xtype: 'list',
-			ui: 'black',
+//			ui: 'black',
 			scroll: 'vertical',
 			store: searchResultStore,
 			width: 280,
@@ -167,7 +168,7 @@ Ext.setup({
 					centered: true,
 					height: 350,
 					scroll: 'vertical',
-					ui: 'dark',
+//					ui: 'dark',
 					items : searchResultList,
 					dockedItems: [{
 						dock: 'top',
@@ -183,7 +184,7 @@ Ext.setup({
 		
 		pgSearchResultList = new Ext.List({
 			xtype: 'list',
-			ui: 'black',
+//			ui: 'black',
 			scroll: 'vertical',
 			store: pgSearchResultStore,
 			width: 280,
@@ -242,7 +243,7 @@ Ext.setup({
 		toolbar = new Ext.Toolbar({
 				dock: 'top',
 				xtype: 'toolbar',
-				ui : 'light',
+//				ui : 'light',
 				defaults: {
 					iconMask: false
 				},
@@ -280,11 +281,11 @@ Ext.setup({
 									y: 50,
 									width: 300,
 									height: 150,
-								    ui: 'dark',
+//								    ui: 'dark',
 									scroll: 'vertical',
 									items : [
 								                new Ext.Button({
-								                    ui  : 'android',
+//								                    ui  : 'android',
 								                    text: 'Free Parking',
 								                    icon: 'freeparking_button.png',
 								                    margin: '10',
@@ -320,7 +321,7 @@ Ext.setup({
 								                	}
 								                }),
 								                new Ext.Button({
-								                    ui  : 'android',
+//								                    ui  : 'android',
 								                    text: 'Garage Parking',
 								                    icon: 'garage_button.png',
 								                    margin: '10',
@@ -332,7 +333,7 @@ Ext.setup({
 																centered: true,
 																height: 350,
 																scroll: 'vertical',
-																ui: 'dark',
+//																ui: 'dark',
 																items : pgSearchResultList,
 																dockedItems: [{
 																	dock: 'top',
@@ -349,41 +350,41 @@ Ext.setup({
 							
 							popup.show('pop');
 						}
-					},
-					{
-						icon: 'infobutton.png',
-						title: 'Nearest...',
-						width: 50,
-						padding: 5,
-						handler: function(event) {
-				
-								popup = new Ext.Panel({
-									floating: true,
-									modal: true,
-									centered: true,
-									width: 300,
-									height: 350,
-									styleHtmlContent: true,
-									scroll: 'vertical',
-									html: '<p><b>Kurzparkzonen</b><br /><b>Preis:</b><br />0.5h - &#8364;0.60<br />1h - &#8364;1.20<br />1.5h - &#8364;1.80<br /><b>Zeiten:</b><br />Montag-Freitag, 8:00 - 22:00 Uhr<br />Samstags, Sonntags und Feiertags frei<br /><b>Verkaufsstellen:</b><br /></p>',
-									dockedItems: [{
-										dock: 'top',
-										xtype: 'toolbar',
-										title: 'Wien'
-									}]
-								});
-							
-							popup.show('pop');
-							event.stop();
-						}
 					}
+//					{
+//						icon: 'infobutton.png',
+//						title: 'Nearest...',
+//						width: 50,
+//						padding: 5,
+//						handler: function(event) {
+//				
+//								popup = new Ext.Panel({
+//									floating: true,
+//									modal: true,
+//									centered: true,
+//									width: 300,
+//									height: 350,
+//									styleHtmlContent: true,
+//									scroll: 'vertical',
+//									html: '<p><b>Kurzparkzonen</b><br /><b>Preis:</b><br />0.5h - &#8364;0.60<br />1h - &#8364;1.20<br />1.5h - &#8364;1.80<br /><b>Zeiten:</b><br />Montag-Freitag, 8:00 - 22:00 Uhr<br />Samstags, Sonntags und Feiertags frei<br /><b>Verkaufsstellen:</b><br /></p>',
+//									dockedItems: [{
+//										dock: 'top',
+//										xtype: 'toolbar',
+//										title: 'Wien'
+//									}]
+//								});
+//							
+//							popup.show('pop');
+//							event.stop();
+//						}
+//					}
 				]
 			});
 		
 		hardwareButtons = new Ext.Toolbar({
 			dock: 'bottom',
 			xtype: 'toolbar',
-			ui : 'light',
+//			ui : 'light',
 			defaults: {
 				iconMask: false
 			},
@@ -421,7 +422,7 @@ Ext.setup({
 										handler: function() {	
 								 		    this.actions.hide();
 											popup = new Ext.Panel({
-												ui: 'dark',
+//												ui: 'dark',
 												floating: true,
 												//modal: true,
 												centered: true,
@@ -543,12 +544,15 @@ Ext.setup({
 		geo.updateLocation();
 		
 		
-		viewport = new Ext.Panel({
+		view = new Ext.Panel({
 			fullscreen: true,
-			dockedItems: [toolbar, hardwareButtons],
+			dockedItems: [toolbar],
 			items: [google_map],
 			layout: 'fit'
 		});
+		
+		viewport = view;
+		
 		
 		var arrowMarker = new google.maps.Marker({
 			position: position,
