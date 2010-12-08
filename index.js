@@ -25,7 +25,7 @@ Ext.setup({
 		});
 		
 		iwFreeparking = new google.maps.InfoWindow({
-			content: '<p><b>Free parking zone</b><img src="navi1.png" width="60" align="right"/></p>'
+			content: '<p><b>keine Kurzparkzone</b><img src="navi1.png" width="60" align="right"/></p>'
 		});
 		
 		iwParkhaus2 = new google.maps.InfoWindow({
@@ -63,13 +63,13 @@ Ext.setup({
 				return record.get('Result') [0];
 			},
 			data: [
-			       {Result: 'Result #1', lat: 48.208927, lng: 16.373391},
-			       {Result: 'Result #2', lat: 48.20577, lng: 16.376391},
-			       {Result: 'Result #3', lat: 48.21427, lng: 16.378391},
-			       {Result: 'Result #4', lat: 48.21127, lng: 16.361391},
-			       {Result: 'Result #5', lat: 48.20127, lng: 16.351391},
-			       {Result: 'Result #6', lat: 48.21927, lng: 16.381391},
-			       {Result: 'Result #7', lat: 48.21127, lng: 16.391391}
+			       {Result: 'Ergebnis #1', lat: 48.208927, lng: 16.373391},
+			       {Result: 'Ergebnis #2', lat: 48.20577, lng: 16.376391},
+			       {Result: 'Ergebnis #3', lat: 48.21427, lng: 16.378391},
+			       {Result: 'Ergebnis #4', lat: 48.21127, lng: 16.361391},
+			       {Result: 'Ergebnis #5', lat: 48.20127, lng: 16.351391},
+			       {Result: 'Ergebnis #6', lat: 48.21927, lng: 16.381391},
+			       {Result: 'Ergebnis #7', lat: 48.21127, lng: 16.391391}
 			]
 		});
 		
@@ -173,7 +173,7 @@ Ext.setup({
 					dockedItems: [{
 						dock: 'top',
 						xtype: 'toolbar',
-						title: 'Search results'
+						title: 'Suchergebnisse'
 					}]
 				});
 			
@@ -253,7 +253,7 @@ Ext.setup({
 						xtype: 'spacer'
 					},{
 						icon: 'locationbutton.png',
-						title: 'Go to my location',
+						title: 'Gehe zu meiner Position',
 						width: 50,
 						padding: 5,
 						handler : function(){
@@ -268,7 +268,7 @@ Ext.setup({
 						}
 					}, {
 						icon: 'parkbutton.png',
-						title: 'Nearest...',
+						title: 'Nächste...',
 						width: 50,
 						padding: 5,
 						handler: function() {
@@ -286,7 +286,7 @@ Ext.setup({
 									items : [
 								                new Ext.Button({
 //								                    ui  : 'android',
-								                    text: 'Free Parking',
+								                    text: 'gratis Parken',
 								                    icon: 'freeparking_button.png',
 								                    margin: '10',
 								                    handler: function(event) {
@@ -322,7 +322,7 @@ Ext.setup({
 								                }),
 								                new Ext.Button({
 //								                    ui  : 'android',
-								                    text: 'Garage Parking',
+								                    text: 'nahe Parkgaragen',
 								                    icon: 'garage_button.png',
 								                    margin: '10',
 								                    handler: function(event) {
@@ -338,7 +338,7 @@ Ext.setup({
 																dockedItems: [{
 																	dock: 'top',
 																	xtype: 'toolbar',
-																	title: 'Nearest Parking Garages'
+																	title: 'nahe Parkgaragen'
 																}]
 															});
 														
