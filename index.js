@@ -8,7 +8,7 @@ Ext.setup({
 		// The following is accomplished with the Google Map API
 		var position = new google.maps.LatLng(48.2000950,16.3684658592);
 		var position = new google.maps.LatLng(48.18927,16.365391);
-		var follow_location = true;
+		var follow_location = false;
 		var viewport;
 		var activeIW = null;
 		var activeMarker = null;
@@ -18,22 +18,26 @@ Ext.setup({
 		
 		iwParkhaus1 = new google.maps.InfoWindow({
 			content: '<div class="infowindow_content"><p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p></div>',
-			disableAutoPan: true
+			disableAutoPan: true,
+			maxWidth: 100
 		});
 		
 		iwKurzparkzone = new google.maps.InfoWindow({
 			content: '<div class="infowindow_content"><p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p></div>',
-			disableAutoPan: true
+			disableAutoPan: true,
+			maxWidth: 100
 		});
 		
 		iwFreeparking = new google.maps.InfoWindow({
 			content: '<div class="infowindow_content"><p><b>Free parking zone</b><img src="navi1.png" width="60" align="right"/></p>',
-			disableAutoPan: true
+			disableAutoPan: true,
+			maxWidth: 100
 		});
 		
 		iwParkhaus2 = new google.maps.InfoWindow({
 			content: '<div class="infowindow_content"><p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>',
-			disableAutoPan: true
+			disableAutoPan: true,
+			maxWidth: 100
 		});
 		
 		//needed for layer panel
@@ -297,6 +301,7 @@ Ext.setup({
 								                    margin: '10',
 								                    handler: function(event) {
 														removeOtherMarkers();
+														removeOtherIWs();
 														popup.hide();
 														var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(48.184458, 16.374768), new google.maps.LatLng(48.184458, 16.374768));
 														if (position.lat() != null && position.lat() != 0)
