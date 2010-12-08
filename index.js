@@ -29,13 +29,11 @@ Ext.setup({
 		});
 		
 		iwFreeparking = new google.maps.InfoWindow({
-<<<<<<< HEAD
-			content: '<p><b>keine Kurzparkzone</b><img src="navi1.png" width="60" align="right"/></p>'
-=======
-			content: '<div class="infowindow_content"><p><b>Free parking zone</b><img src="navi1.png" width="60" align="right"/></p>',
+
+			content: '<div class="infowindow_content"><p><b>keine Kurzparkzone</b><img src="navi1.png" width="60" align="right"/></p>',
 			disableAutoPan: true,
 			maxWidth: 100
->>>>>>> bce78ad0a43fce89a077c52ac72c5ca17156c09b
+
 		});
 		
 		iwParkhaus2 = new google.maps.InfoWindow({
