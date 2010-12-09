@@ -16,29 +16,10 @@ Ext.setup({
 		var parkingspacemarker = null;
 		var view = null;
 		
-		iwParkhaus1 = new google.maps.InfoWindow({
-			content: '<div class="infowindow_content"><p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p></div>',
-			disableAutoPan: true,
-			maxWidth: 100
-		});
-		
-		iwKurzparkzone = new google.maps.InfoWindow({
-			content: '<div class="infowindow_content"><p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p></div>',
-			disableAutoPan: true,
-			maxWidth: 100
-		});
-		
-		iwFreeparking = new google.maps.InfoWindow({
-			content: '<div class="infowindow_content"><p><b>Free parking zone</b><img src="navi1.png" width="60" align="right"/></p>',
-			disableAutoPan: true,
-			maxWidth: 100
-		});
-		
-		iwParkhaus2 = new google.maps.InfoWindow({
-			content: '<div class="infowindow_content"><p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>',
-			disableAutoPan: true,
-			maxWidth: 100
-		});
+		iwParkhaus1_content = '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
+		iwKurzparkzone_content = '<p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p>';
+		iwFreeparking_content = '<p><b>Free parking zone</b><img src="navi1.png" width="60" align="right"/></p>';
+		iwParkhaus2_content = '<p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
 		
 		//needed for layer panel
 		Ext.regModel('Layers', {
@@ -227,23 +208,23 @@ Ext.setup({
 			activeMarker = pgSearchresultmarker;
 			if (index == 0)
 			{
-				iwParkhaus1.open(google_map.map, pgSearchresultmarker);
+				var iwParkhaus1 = new InfoBox({content: iwParkhaus1_content, latlng: pgSearchresultmarker.getPosition(), map: google_map.map});
 				activeIW = iwParkhaus1;
 				
 				google.maps.event.addListener(pgSearchresultmarker, 'click', function(){
 					removeOtherIWs();
-					iwParkhaus1.open(google_map.map, pgSearchresultmarker);
+					var iwParkhaus1 = new InfoBox({content: iwParkhaus1_content, latlng: pgSearchresultmarker.getPosition(), map: google_map.map});
 					activeIW = iwParkhaus1;
 				});
 			}
 			else
 			{
-				iwParkhaus2.open(google_map.map, pgSearchresultmarker);
+				var iwParkhaus2 = new InfoBox({content: iwParkhaus2_content, latlng: pgSearchresultmarker.getPosition(), map: google_map.map});
 				activeIW = iwParkhaus1;
 				
 				google.maps.event.addListener(pgSearchresultmarker, 'click', function(){
 					removeOtherIWs();
-					iwParkhaus2.open(google_map.map, pgSearchresultmarker);
+					var iwParkhaus2 = new InfoBox({content: iwParkhaus2_content, latlng: pgSearchresultmarker.getPosition(), map: google_map.map});
 					activeIW = iwParkhaus2;
 				});
 			}
@@ -320,12 +301,12 @@ Ext.setup({
 														
 														activeMarker = parkingspacemarker;
 														
-														iwFreeparking.open(google_map.map, parkingspacemarker);
+														var iwFreeparking = new InfoBox({content: iwFreeparking_content, latlng: parkingspacemarker.getPosition(), map: google_map.map});
 														activeIW = iwFreeparking;
 														
 														google.maps.event.addListener(parkingspacemarker, 'click', function(){
 															removeOtherIWs();
-															iwFreeparking.open(google_map.map, parkingspacemarker);
+															var iwFreeparking = new InfoBox({content: iwFreeparking_content, latlng: parkingspacemarker.getPosition(), map: google_map.map});
 															activeIW = iwFreeparking;
 														});
 														event.stop();
@@ -637,28 +618,138 @@ Ext.setup({
 				activeMarker.setVisible(false);
 		}
 		
-		google.maps.event.addListener(iwParkhaus1, 'closeclick', function(){
-			activeIW = null;
-		});
-		
 		google.maps.event.addListener(parkgarageMarker, 'click', function(){
 			removeOtherIWs();
-			iwParkhaus1.open(google_map.map, parkgarageMarker);
+			var iwParkhaus1 = new InfoBox({content: iwParkhaus1_content, latlng: parkgarageMarker.getPosition(), map: google_map.map});
 			activeIW = iwParkhaus1;
 		});
 		
 		google.maps.event.addListener(parkgarageMarker2, 'click', function(){
 			removeOtherIWs();
-			iwParkhaus2.open(google_map.map, parkgarageMarker2);
+			var iwParkhaus2 = new InfoBox({content: iwParkhaus2_content, latlng: parkgarageMarker2.getPosition(), map: google_map.map});
 			activeIW = iwParkhaus2;
 		});
 		
 		google.maps.event.addListener(kurzparkzone, 'click', function(event){
 			removeOtherIWs();
-			iwKurzparkzone.setPosition(event.latLng);
-			iwKurzparkzone.open(google_map.map);
+			
+			var iwKurzparkzone = new InfoBox({content: iwKurzparkzone_content, latlng: event.latLng, map: google_map.map});
+			
 			activeIW = iwKurzparkzone;
 		});
 		
 	}
 });
+
+function InfoBox(opts) {
+  google.maps.OverlayView.call(this);
+  this.latlng_ = opts.latlng;
+  this.map_ = opts.map;
+  this.content_ = opts.content;
+  this.offsetVertical_ = -100;
+  this.offsetHorizontal_ = 0;
+  this.height_ = 100;
+  this.width_ = 180;
+ 
+  var me = this;
+  this.boundsChangedListener_ =
+    google.maps.event.addListener(this.map_, "bounds_changed", function() {
+      //return me.panMap.apply(me);
+    });
+ 
+  // Once the properties of this OverlayView are initialized, set its map so
+  // that we can display it.  This will trigger calls to panes_changed and
+  // draw.
+  this.setMap(this.map_);
+}
+ 
+/* InfoBox extends GOverlay class from the Google Maps API
+ */
+InfoBox.prototype = new google.maps.OverlayView();
+ 
+/* Creates the DIV representing this InfoBox
+ */
+InfoBox.prototype.remove = function() {
+  if (this.div_) {
+    this.div_.parentNode.removeChild(this.div_);
+    this.div_ = null;
+  }
+};
+ 
+/* Redraw the Bar based on the current projection and zoom level
+ */
+InfoBox.prototype.draw = function() {
+  // Creates the element if it doesn't exist already.
+  this.createElement();
+  if (!this.div_) return;
+ 
+  // Calculate the DIV coordinates of two opposite corners of our bounds to
+  // get the size and position of our Bar
+  var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+  if (!pixPosition) return;
+ 
+  // Now position our DIV based on the DIV coordinates of our bounds
+  this.div_.style.width = this.width_ + "px";
+  this.div_.style.left = (pixPosition.x + this.offsetHorizontal_) + "px";
+  this.div_.style.height = this.height_ + "px";
+  this.div_.style.top = (pixPosition.y + this.offsetVertical_) + "px";
+  this.div_.style.display = 'block';
+};
+
+InfoBox.prototype.close = function() {
+	if (this.div_) {
+    	this.div_.parentNode.removeChild(this.div_);
+    	this.div_ = null;
+	}
+}
+
+/* Creates the DIV representing this InfoBox in the floatPane.  If the panes
+ * object, retrieved by calling getPanes, is null, remove the element from the
+ * DOM.  If the div exists, but its parent is not the floatPane, move the div
+ * to the new pane.
+ * Called from within draw.  Alternatively, this can be called specifically on
+ * a panes_changed event.
+ */
+InfoBox.prototype.createElement = function() {
+  var panes = this.getPanes();
+  var div = this.div_;
+  if (!div) {
+    // This does not handle changing panes.  You can set the map to be null and
+    // then reset the map to move the div.
+    div = this.div_ = document.createElement("div");
+    div.className = 'infowindow_holder';
+    div.style.width = this.width_ + "px";
+    div.style.height = this.height_ + "px";
+    
+    var contentDiv = document.createElement("div");
+   	contentDiv.className = 'infowindow_content';
+    contentDiv.innerHTML = this.content_;
+ 
+    var closeImg = document.createElement("img");
+    closeImg.style.width = "32px";
+    closeImg.style.height = "32px";
+    closeImg.style.cursor = "pointer";
+    closeImg.style.float = "right";
+    closeImg.src = "http://gmaps-samples.googlecode.com/svn/trunk/images/closebigger.gif";
+    div.appendChild(closeImg);
+ 
+    function removeInfoBox(ib) {
+      return function() {
+        ib.setMap(null);
+      };
+    }
+ 
+    google.maps.event.addDomListener(closeImg, 'click', removeInfoBox(this));
+ 
+    div.appendChild(contentDiv);
+    div.style.display = 'none';
+    panes.floatPane.appendChild(div);
+    //this.panMap();
+  } else if (div.parentNode != panes.floatPane) {
+    // The panes have changed.  Move the div.
+    div.parentNode.removeChild(div);
+    panes.floatPane.appendChild(div);
+  } else {
+    // The panes have not changed, so no need to create or move the div.
+  }
+}
