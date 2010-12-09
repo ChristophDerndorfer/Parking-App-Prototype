@@ -17,4 +17,14 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 	top: 72px;
 	left: -11px;
 }
-.iwContent{ maxWidth: 150px;} 
+.x-toolbar.x-docked-top.green_bar{
+	border: 0px;
+	border-bottom: 0px;
+	background-color:rgba(43, 178, 17, 0.76);
+	height: 1.7em;
+}
+
+.green_bar .x-toolbar-title {
+	font-size: 0.6em;
+	line-height: 2.5em;
+}

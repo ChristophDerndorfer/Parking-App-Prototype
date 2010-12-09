@@ -578,10 +578,17 @@ Ext.setup({
 			});
 		geo.updateLocation();
 		
+		green_bar = new Ext.Toolbar({
+			dock: 'top',
+			xtype: 'toolbar',
+			cls: 'green_bar',
+			title: 'Heute: 7 bis 20 Uhr, Tickets beim Automaten'
+		});
+
 		
 		view = new Ext.Panel({
 			fullscreen: true,
-			dockedItems: [toolbar],
+			dockedItems: [toolbar, green_bar],
 			items: [google_map],
 			layout: 'fit'
 		});
