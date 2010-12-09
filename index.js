@@ -315,7 +315,7 @@ Ext.setup({
 															var iwFreeparking = new InfoBox({content: iwFreeparking_content, latlng: parkingspacemarker.getPosition(), map: google_map.map});
 															activeIW = iwFreeparking;
 														});
-														event.stop();
+														event.stopPropagation();
 								                	}
 								                }),
 								                new Ext.Button({
@@ -341,7 +341,7 @@ Ext.setup({
 															});
 														
 														popup.show('pop');
-														event.stop();
+														event.stopPropagation();
 								                	}
 								                })]
 								});
@@ -375,7 +375,7 @@ Ext.setup({
 //								});
 //							
 //							popup.show('pop');
-//							event.stop();
+//							event.stopPropagation();
 //						}
 //					}
 				]
