@@ -354,7 +354,8 @@ Ext.setup({
 						ui: 'plain',
 						useIndicators: false,
 						handler: function() {	
-				 		    this.actions.hide();
+							if (popup)
+					 		    popup.hide();
 							popup = new Ext.Panel({
 								floating: true,
 								modal: true,
