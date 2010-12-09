@@ -132,6 +132,7 @@ Ext.setup({
 		
 		searchResultList.on('itemtap', function(dataView, index, element, event) {
 			removeOtherMarkers();
+			removeOtherIWs();
 			popup.hide();
 			event.stopPropagation();
 			var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')), new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')));
