@@ -133,7 +133,7 @@ Ext.setup({
 		searchResultList.on('itemtap', function(dataView, index, element, event) {
 			removeOtherMarkers();
 			popup.hide();
-			event.stop();
+			event.stopPropagation();
 			var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')), new google.maps.LatLng(searchResultStore.getAt(index).get('lat'), searchResultStore.getAt(index).get('lng')));
 			if (position.lat() != null && position.lat() != 0)
 				bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
@@ -191,6 +191,7 @@ Ext.setup({
 			removeOtherMarkers();
 			removeOtherIWs();
 			popup.hide();
+			event.stopPropagation();
 			var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(pgSearchResultStore.getAt(index).get('lat'), pgSearchResultStore.getAt(index).get('lng')), new google.maps.LatLng(pgSearchResultStore.getAt(index).get('lat'), pgSearchResultStore.getAt(index).get('lng')));
 			if (position.lat() != null && position.lat() != 0)
 				bounds.extend(new google.maps.LatLng(position.lat(), position.lng()));
@@ -228,7 +229,6 @@ Ext.setup({
 					activeIW = iwParkhaus2;
 				});
 			}
-			event.stop();
 		});
 
 		toolbar = new Ext.Toolbar({
@@ -286,7 +286,7 @@ Ext.setup({
 								                    text: 'gratis Parken',
 								                    icon: 'freeparking_button.png',
 								                    margin: '10',
-								                    handler: function(event) {
+								                    handler: function(button, event) {
 														removeOtherMarkers();
 														removeOtherIWs();
 														popup.hide();
@@ -323,7 +323,7 @@ Ext.setup({
 								                    text: 'nahe Parkgaragen',
 								                    icon: 'garage_button.png',
 								                    margin: '10',
-								                    handler: function(event) {
+								                    handler: function(button, event) {
 								                    	popup.hide();
 														popup = new Ext.Panel({
 																floating: true,
