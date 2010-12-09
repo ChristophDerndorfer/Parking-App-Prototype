@@ -784,12 +784,12 @@ InfoBox.prototype.createElement = function() {
     closeImg.style.height = "32px";
     closeImg.style.cursor = "pointer";
     closeImg.style.float = "right";
-    closeImg.src = "http://gmaps-samples.googlecode.com/svn/trunk/images/closebigger.gif";
+    closeImg.src = "close.gif";
     div.appendChild(closeImg);
  
     var arrowImg = document.createElement("img");
-    closeImg.className = 'infowindow_arrow';
-    closeImg.src = "iw_arrow.png";
+    arrowImg.className = 'infowindow_arrow';
+    arrowImg.src = "iw_arrow.png";
  
     function removeInfoBox(ib) {
       return function() {
