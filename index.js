@@ -344,10 +344,44 @@ Ext.setup({
 														event.stopPropagation();
 								                	}
 								                })]
-								});
+								}
+								);
 							
 							popup.show('pop');
 						}
+					},{
+						icon: 'layer.png',
+						ui: 'plain',
+						useIndicators: false,
+						handler: function() {	
+				 		    this.actions.hide();
+							popup = new Ext.Panel({
+								floating: true,
+								modal: true,
+								centered: true,
+								width: 200,							
+								items: [{
+									xtype: 'checkboxfield',
+									name: 'parkhouses',
+									label: 'Parkgaragen'
+								},{
+									xtype: 'checkboxfield',
+									name: 'parkingmachines',
+									label: 'Parkautomaten'
+								},{
+									xtype: 'checkboxfield',
+									name: 'freeparking',
+									label: 'Gratiszonen'
+								},
+								],
+								dockedItems: [{
+									dock: 'top',
+									xtype: 'toolbar',
+									title: 'Layers'
+								}]
+							});		
+						  popup.show('pop');
+					  }
 					}
 //					{
 //						icon: 'infobutton.png',
