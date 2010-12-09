@@ -250,6 +250,9 @@ Ext.setup({
 //						width: 50,
 //						padding: 5,
 						handler : function(){
+							removeOtherMarkers();
+							removeOtherIWs();
+							popup.hide();
 							//disable tracking
 							//trackingButton.ownerCt.setActive(trackingButton, false);
 							if (position.lat() != null && position.lat() != 0)
@@ -361,18 +364,22 @@ Ext.setup({
 								modal: true,
 								centered: true,
 								width: 200,							
-								items: [{
+								items: [
+								{
+									xtype: 'checkboxfield',
+									name: 'freeparking',
+									label: 'Gratiszonen',
+									checked: 'true'
+								},
+								{
 									xtype: 'checkboxfield',
 									name: 'parkhouses',
-									label: 'Parkgaragen'
+									label: 'Parkgaragen',
+									checked: 'true'
 								},{
 									xtype: 'checkboxfield',
 									name: 'parkingmachines',
 									label: 'Parkautomaten'
-								},{
-									xtype: 'checkboxfield',
-									name: 'freeparking',
-									label: 'Gratiszonen'
 								},
 								],
 								dockedItems: [{
