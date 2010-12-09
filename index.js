@@ -82,9 +82,9 @@ Ext.setup({
 		//Tracking Marker Image
 		point = new google.maps.MarkerImage(
 			'point.png',
-			new google.maps.Size(32, 31),
+			new google.maps.Size(20, 34),
 			new google.maps.Point(0,0),
-			new google.maps.Point(16, 31)
+			new google.maps.Point(10, 34)
 		  );
 
 		shadow = new google.maps.MarkerImage(
@@ -705,7 +705,7 @@ function InfoBox(opts) {
   this.map_ = opts.map;
   this.content_ = opts.content;
   this.offsetVertical_ = -107;
-  this.offsetHorizontal_ = 7;
+  this.offsetHorizontal_ = 10;
   this.height_ = 100;
   this.width_ = 180;
  
