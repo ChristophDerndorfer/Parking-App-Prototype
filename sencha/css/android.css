@@ -19,14 +19,19 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 	top: 69px;
 	left: -12px;
 }
-.x-toolbar.x-docked-top.green_bar{
+.x-panel.green_bar{
 	border: 0px;
 	border-bottom: 0px;
 	background-color:rgba(43, 178, 17, 0.76);
 	height: 1.7em;
+	position: absolute;
+	top: 0px;
+	z-index: 99999;
 }
 
-.green_bar .x-toolbar-title {
+.green_bar .x-title {
 	font-size: 0.6em;
+	color: #fff;
 	line-height: 2.5em;
+	text-align: center;
 }

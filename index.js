@@ -253,15 +253,18 @@ Ext.setup({
 						handler : function(){
 							removeOtherMarkers();
 							removeOtherIWs();
-							popup.hide();
+							if (popup)
+								popup.hide();
 							//disable tracking
 							//trackingButton.ownerCt.setActive(trackingButton, false);
 							if (position.lat() != null && position.lat() != 0)
 							{
 								google_map.map.panTo(new google.maps.LatLng(position.lat(), position.lng()));
 								google_map.map.setZoom(18);
-								popup.hide();
+								if (popup)
+									popup.hide();
 							}
+							green_bar.show('fade');
 						}
 					}, {
 						icon: 'parkbutton.png',
@@ -586,18 +589,19 @@ Ext.setup({
 			});
 		geo.updateLocation();
 		
-		green_bar = new Ext.Toolbar({
-			dock: 'top',
-			xtype: 'toolbar',
+		green_bar = new Ext.Panel({
 			cls: 'green_bar',
-			title: 'Heute: 7 bis 20 Uhr, Tickets beim Automaten'
+			height: 30,
+			html: '<div class="x-title">Heute: 7 bis 20 Uhr, Tickets beim Automaten</div>'
 		});
-
+		
+		green_bar.on('added', function() { setTimeout( function() { green_bar.hide('fade'); view.doComponentLayout(); view.doLayout(); }, 5000); });
+		green_bar.on('show', function() { setTimeout( function() { green_bar.hide('fade'); view.doComponentLayout(); view.doLayout(); }, 5000); });
 		
 		view = new Ext.Panel({
 			fullscreen: true,
-			dockedItems: [toolbar, green_bar],
-			items: [google_map],
+			dockedItems: [toolbar],
+			items: [google_map, green_bar],
 			layout: 'fit'
 		});
 		
