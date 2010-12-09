@@ -705,10 +705,7 @@ InfoBox.prototype.draw = function() {
 };
 
 InfoBox.prototype.close = function() {
-	if (this.div_) {
-    	this.div_.parentNode.removeChild(this.div_);
-    	this.div_ = null;
-	}
+	this.setMap(null);
 }
 
 /* Creates the DIV representing this InfoBox in the floatPane.  If the panes
