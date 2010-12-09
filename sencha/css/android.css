@@ -10,4 +10,11 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 	font-size: 10px;
 	padding: 10px;
 }
-.iwContent{ maxWidth:150px;} 
+.infowindow_arrow {
+	position: absolute;
+	width: 36px;
+	height: 36px;
+	top: 72px;
+	left: -11px;
+}
+.iwContent{ maxWidth: 150px;} 

@@ -16,10 +16,10 @@ Ext.setup({
 		var parkingspacemarker = null;
 		var view = null;
 		
-		iwParkhaus1_content = '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
+		iwParkhaus1_content = '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi.png" width="40" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
 		iwKurzparkzone_content = '<p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p>';
-		iwFreeparking_content = '<p><b>keine Kurzparkzone</b><img src="navi1.png" width="60" align="right"/></p>';
-		iwParkhaus2_content = '<p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi1.png" width="60" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
+		iwFreeparking_content = '<p><b>keine Kurzparkzone</b><br /><br /><img src="navi.png" width="40" align="right"/></p>';
+		iwParkhaus2_content = '<p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi.png" width="40" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
 		
 		//needed for layer panel
 		Ext.regModel('Layers', {
@@ -654,8 +654,8 @@ function InfoBox(opts) {
   this.latlng_ = opts.latlng;
   this.map_ = opts.map;
   this.content_ = opts.content;
-  this.offsetVertical_ = -100;
-  this.offsetHorizontal_ = 0;
+  this.offsetVertical_ = -107;
+  this.offsetHorizontal_ = 7;
   this.height_ = 100;
   this.width_ = 180;
  
@@ -738,6 +738,10 @@ InfoBox.prototype.createElement = function() {
     closeImg.src = "http://gmaps-samples.googlecode.com/svn/trunk/images/closebigger.gif";
     div.appendChild(closeImg);
  
+    var arrowImg = document.createElement("img");
+    closeImg.className = 'infowindow_arrow';
+    closeImg.src = "iw_arrow.png";
+ 
     function removeInfoBox(ib) {
       return function() {
         ib.setMap(null);
@@ -747,6 +751,7 @@ InfoBox.prototype.createElement = function() {
     google.maps.event.addDomListener(closeImg, 'click', removeInfoBox(this));
  
     div.appendChild(contentDiv);
+    div.appendChild(arrowImg);
     div.style.display = 'none';
     panes.floatPane.appendChild(div);
     //this.panMap();
