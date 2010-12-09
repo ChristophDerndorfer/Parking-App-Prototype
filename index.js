@@ -266,8 +266,10 @@ Ext.setup({
 					},{
 						icon: 'locationbutton.png',
 						title: 'Gehe zu meiner Position',
-						width: 50,
-						padding: 5,
+						ui: 'plain',
+						useIndicators: false,
+//						width: 50,
+//						padding: 5,
 						handler : function(){
 							//disable tracking
 							//trackingButton.ownerCt.setActive(trackingButton, false);
@@ -280,9 +282,13 @@ Ext.setup({
 						}
 					}, {
 						icon: 'parkbutton.png',
+//						iconMask: true,	
+						ui: 'plain',
+						useIndicators: false,
 						title: 'Nächste...',
-						width: 50,
-						padding: 5,
+
+//						width: 50,
+//						padding: 5,
 						handler: function() {
 							
 								popup = new Ext.Panel({
@@ -367,6 +373,8 @@ Ext.setup({
 //					{
 //						icon: 'infobutton.png',
 //						title: 'Nearest...',
+//					    ui: 'plain',
+//					    useIndicators: false,
 //						width: 50,
 //						padding: 5,
 //						handler: function(event) {
