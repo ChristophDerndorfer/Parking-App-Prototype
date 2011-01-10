@@ -691,8 +691,8 @@ Ext.setup({
 		var freeparking = new google.maps.Polygon({
 			paths: freeparkingCoords,
 			strokeColor: "#00FF00",
-			strokeOpacity: 0,
-			strokeWeight: 0,
+			strokeOpacity: 0.8,
+			strokeWeight: 2,
 			fillColor: "#00FF00",
 			fillOpacity: 0.25,
 			map: google_map.map
@@ -743,6 +743,14 @@ Ext.setup({
 			var iwKurzparkzone = new InfoBox({content: iwKurzparkzone_content, latlng: event.latLng, map: google_map.map});
 			
 			activeIW = iwKurzparkzone;
+		});
+		
+		google.maps.event.addListener(freeparking, 'click', function(event){
+			removeOtherIWs();
+			
+			var iwFreeparking = new InfoBox({content: iwFreeparking_content, latlng: event.latLng, map: google_map.map});
+			
+			activeIW = iwFreeparking;
 		});
 		
 	}
