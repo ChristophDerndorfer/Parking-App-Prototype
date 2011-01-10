@@ -18,7 +18,7 @@ Ext.setup({
 		
 		iwParkhaus1_content = '<p><b>Parkhaus 1</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi.png" width="40" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
 		iwKurzparkzone_content = '<p><b>Kurzparkzonen</b><br />Mo - Fr, 8:00 - 22:00 Uhr<br />Sa, 07:00 - 20:00<br />So, Feiertags frei<br /></p>';
-		iwFreeparking_content = '<p><b>keine Kurzparkzone</b><br /><br /><img src="navi.png" width="40" align="right"/></p>';
+		iwFreeparking_content = '<p><b>keine Kurzparkzone</b></p>';
 		iwParkhaus2_content = '<p><b>Parkhaus 2</b><img src="disabled_parking.png" width="20" align="right"/><br /><b>&Ouml;ffnungszeiten:</b><img src="navi.png" width="40" align="right"/><br />Mo - So, 06:00 - 24:00<br /><b>Preis:</b> &#8364;2,3 / h<br /><b>Maximalh&ouml;he:</b> 2,3m<br /></p>';
 		
 		//needed for layer panel
