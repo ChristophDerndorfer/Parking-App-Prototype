@@ -64,7 +64,7 @@ Ext.setup({
 		
 		//needed for parking garage results
 		Ext.regModel('Parking Garage Search Results', {
-			fields: ['Result', 'lat', 'lng', 'dist']});
+			fields: ['Result', 'lat', 'lng', 'dist', 'cost']});
 		
 		pgSearchResultStore = new Ext.data.Store({
 		
@@ -74,8 +74,8 @@ Ext.setup({
 				return record.get('Result') [0];
 			},
 			data: [
-			       {Result: 'Parkhaus #1', lat: 48.1984500, lng: 16.3680958592, dist: 1.1},
-			       {Result: 'Parkhaus #2', lat: 48.2084500, lng: 16.3780958592, dist: 3}
+			       {Result: 'Parkhaus #1', lat: 48.1984500, lng: 16.3680958592, dist: 1, cost: 2.3},
+			       {Result: 'Parkhaus #2', lat: 48.2084500, lng: 16.3780958592, dist: 3, cost: 2.3}
 			]
 		});
 
@@ -110,7 +110,7 @@ Ext.setup({
 
 		var searchfield = new Ext.form.Search({
 			xtype: 'searchfield',
-			placeHolder: 'Search',
+			placeHolder: 'Adresse',
 			name: 'searchfield',
 			width: 120
 		});
@@ -185,7 +185,7 @@ Ext.setup({
 			onItemDisclosure: function(record, btn, index) {
 				Ext.Msg.alert('Navigation', 'Wollen Sie in die Navigation wechseln?', Ext.emptyFn);
 			},
-			itemTpl: '<div class="Search Results"><strong>{Result} ({dist} km)</strong></div>'
+			itemTpl: '<div class="Search Results"><strong>{Result} ({dist} km, €{cost})</strong></div>'
 		});
 		
 		pgSearchResultList.on('itemtap', function(dataView, index, element, event) {
@@ -250,6 +250,7 @@ Ext.setup({
 						useIndicators: false,
 //						width: 50,
 //						padding: 5,
+//						height: 100,
 						handler : function(){
 							removeOtherMarkers();
 							removeOtherIWs();
@@ -643,12 +644,55 @@ Ext.setup({
 			new google.maps.LatLng(48.219229,16.342913)
 		];
 		
+		var freeparkingCoords = [
+			new google.maps.LatLng(48.219229,16.342913),
+			new google.maps.LatLng(48.209392,16.33742),
+			new google.maps.LatLng(48.203671,16.336733),
+			new google.maps.LatLng(48.196577,16.339479),
+			new google.maps.LatLng(48.186507,16.335703),
+			new google.maps.LatLng(48.186965,16.343599),
+			new google.maps.LatLng(48.180326,16.349436),
+			new google.maps.LatLng(48.180555,16.356302),
+			new google.maps.LatLng(48.188109,16.380335),
+			new google.maps.LatLng(48.187651,16.393038),
+			new google.maps.LatLng(48.182845,16.397844),
+			new google.maps.LatLng(48.180555,16.400934),
+			new google.maps.LatLng(48.192687,16.415697),
+			new google.maps.LatLng(48.201383,16.405741),
+			new google.maps.LatLng(48.203214,16.398874),
+			new google.maps.LatLng(48.212595,16.392351),
+			new google.maps.LatLng(48.213967,16.390635),
+			new google.maps.LatLng(48.229521,16.387545),
+			new google.maps.LatLng(48.241413,16.374498),
+			new google.maps.LatLng(48.236382,16.361795),
+			new google.maps.LatLng(48.235925,16.356646),
+			new google.maps.LatLng(48.232037,16.353899),
+			new google.maps.LatLng(48.230436,16.349092),
+			new google.maps.LatLng(48.22449,16.349779),
+			new google.maps.LatLng(48.219229,16.342913),
+			new google.maps.LatLng(48.1,16.2),
+			new google.maps.LatLng(48.1,16.5),
+			new google.maps.LatLng(48.3,16.5),
+			new google.maps.LatLng(48.3,16.2),
+			new google.maps.LatLng(48.1,16.2)
+		];
+		
 		var kurzparkzone = new google.maps.Polygon({
 			paths: kurzparkzoneCoords,
 			strokeColor: "#FF0000",
 			strokeOpacity: 0.8,
 			strokeWeight: 2,
 			fillColor: "#FF0000",
+			fillOpacity: 0.25,
+			map: google_map.map
+		});
+		
+		var freeparking = new google.maps.Polygon({
+			paths: freeparkingCoords,
+			strokeColor: "#00FF00",
+			strokeOpacity: 0,
+			strokeWeight: 0,
+			fillColor: "#00FF00",
 			fillOpacity: 0.25,
 			map: google_map.map
 		});
