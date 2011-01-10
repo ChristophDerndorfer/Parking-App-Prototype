@@ -593,7 +593,7 @@ Ext.setup({
 		green_bar = new Ext.Panel({
 			cls: 'green_bar',
 			height: 30,
-			html: '<div class="x-title"> <img src="exit.png">  Heute: 7 bis 20 Uhr, Tickets beim Automaten </div>'
+			html: '<div class="x-title">   Heute: 7 bis 20 Uhr, Tickets beim Automaten  <img src="exit.png"> </div>'
 			//dockeditems: [ exit ]
 		});
 		
