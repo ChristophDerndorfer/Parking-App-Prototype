@@ -593,10 +593,11 @@ Ext.setup({
 		green_bar = new Ext.Panel({
 			cls: 'green_bar',
 			height: 30,
-			html: '<div class="x-title">Heute: 7 bis 20 Uhr, Tickets beim Automaten</div>'
+			html: '<div class="x-title"> <img src="exit.png">  Heute: 7 bis 20 Uhr, Tickets beim Automaten </div>'
+			//dockeditems: [ exit ]
 		});
 		
-		green_bar.on('added', function() { setTimeout( function() { green_bar.hide('fade'); view.doComponentLayout(); view.doLayout(); }, 5000); });
+//		green_bar.on('added', function() { setTimeout( function() { green_bar.hide('fade'); view.doComponentLayout(); view.doLayout(); }, 5000); });
 		green_bar.on('show', function() { setTimeout( function() { green_bar.hide('fade'); view.doComponentLayout(); view.doLayout(); }, 5000); });
 		
 		view = new Ext.Panel({
