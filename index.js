@@ -277,7 +277,7 @@ Ext.setup({
 //						width: 50,
 //						padding: 5,
 						handler: function() {
-							
+								green_bar.hide('fade');
 								popup = new Ext.Panel({
 									floating: true,
 									modal: true,
