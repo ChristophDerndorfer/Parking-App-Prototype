@@ -285,7 +285,7 @@ Ext.setup({
 									x: 5,
 									y: 50,
 									width: 300,
-									height: 150,
+									height: 160,
 //								    ui: 'dark',
 									scroll: 'vertical',
 									items : [
