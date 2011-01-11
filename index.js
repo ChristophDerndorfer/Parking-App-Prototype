@@ -593,7 +593,7 @@ Ext.setup({
 		green_bar = new Ext.Panel({
 			cls: 'green_bar',
 			height: 30,
-			html: '<div class="x-title">   Heute: 7 bis 20 Uhr, Tickets beim Automaten  <img src="exit.png"> </div>'
+			html: '<a href="javascript:void(0);" onclick="javascript:green_bar.hide(\'fade\');" style="float: right; padding: 5px;"><img src="exit.png" style="height: 20px;"></a><div class="x-title">Heute: 7 bis 20 Uhr, Tickets beim Automaten</div>'
 			//dockeditems: [ exit ]
 		});
 		
