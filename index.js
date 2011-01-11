@@ -265,7 +265,7 @@ Ext.setup({
 								if (popup)
 									popup.hide();
 							}
-							green_bar.show('fade');
+							//green_bar.show('fade');
 						}
 					}, {
 						icon: 'parkbutton.png',
